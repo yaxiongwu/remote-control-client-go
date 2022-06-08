@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "gitee.com/46520368/remote-control/pkg/proto/rtc";
+option go_package = "github.com/YaxiongWu/remote-control-client-go/pkg/proto/rtc";
 
 package rtc;
 
@@ -8,13 +8,23 @@ service RTC {
   rpc Signal(stream Request) returns (stream Reply) {}
 }
 
-message CreateSessionRequest {
-  string sid = 1;
-  string uid = 2;
-  map<string, string> config = 3;  
+enum Role {
+  Admin =0;
+  VideoSource = 1;
+  Control = 2;
+  Observe = 3;
+  Unknown = 4; 
 }
 
-message CreateSessionReply {
+//创建一个新的视频源
+message RegisterRequest {
+  string sid = 1;
+  string uid = 2;
+  Role   role=3;
+  map<string, string> config = 4;  
+}
+//创建视频源的回复
+message RegisterReply {
   bool success = 1;
   Error error = 2;  
 }
@@ -129,7 +139,7 @@ message AudioLevelSpeaker {
 message Request {
   oneof payload {
     // Basic API Request
-    CreateSessionRequest createSession=1;
+    RegisterRequest register=1;
     JoinRequest join = 2;
     SessionDescription description = 3;
     Trickle trickle = 4;
@@ -142,7 +152,7 @@ message Request {
 message Reply {
   oneof payload {
     // Basic API Reply
-    CreateSessionReply createSessionReply=1;
+    RegisterReply register=1;
     JoinReply join = 2;
     SessionDescription description = 3;
     Trickle trickle = 4;
