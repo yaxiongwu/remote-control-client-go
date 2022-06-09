@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/YaxiongWu/remote-control-client-go/pkg/proto/rtc"
+	"github.com/YaxiongWu/remote-control-server/pkg/proto/rtc"
 	log "github.com/pion/ion-log"
 	"github.com/pion/webrtc/v3"
 	"google.golang.org/grpc/codes"
@@ -706,7 +706,7 @@ func (r *RTC) onSingalHandle() error {
 		}
 
 		switch payload := stream.Payload.(type) {
-		case *rtc.Reply_CreateSessionReply:
+		case *rtc.Reply_Register:
 			//处理CreateSessionReply的结果，如重名等
 		//case *rtc.Request_Join:
 		//网页或APP的Request_join可直接发到这里来
@@ -969,8 +969,8 @@ func (r *RTC) CreateSession(sid, uid string, config ...*JoinConfig) error {
 	log.Infof("[C=>S] sid: %v,uid:%v", sid, uid)
 	err := r.signaller.Send(
 		&rtc.Request{
-			Payload: &rtc.Request_CreateSession{
-				CreateSession: &rtc.CreateSessionRequest{
+			Payload: &rtc.Request_Register{
+				Register: &rtc.RegisterRequest{
 					Sid: sid,
 					Uid: uid,
 				},

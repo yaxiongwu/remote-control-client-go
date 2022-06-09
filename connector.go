@@ -6,7 +6,7 @@ import (
 	"crypto/x509"
 	"io/ioutil"
 
-	"github.com/YaxiongWu/remote-control-client-go/pkg/proto/rtc"
+	"github.com/YaxiongWu/remote-control-server/pkg/proto/rtc"
 
 	log "github.com/pion/ion-log"
 	"google.golang.org/grpc"
