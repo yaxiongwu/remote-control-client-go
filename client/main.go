@@ -101,27 +101,19 @@ func main() {
 				log.Errorf("Unmarshal:err %v", err)
 				return
 			}
-
+			/*使用树莓派时开启
 			//if(recvData["type"] != nil){
 			switch recvData["type"] {
 			case 1: //方向
 				//每次方向摇杆放开就会回到(0,0)，如果y=0，固定为往前走，这样会导致永远不会往后走
-				//if recvData["y"] == 0 {
-				//    break
-				//}
-				//   if(recvData["x"] != nil){
-				//   dx <- recvData["x"]
-				//}
-				// if(recvData.y != nil){
-				//  dy <- recvData["y"]
-				//}
-				//	pi.DirectionControl(recvData["x"], recvData["y"])
+				  pi.DirectionControl(recvData["x"], recvData["y"])
 			case 2: //速度
 				//if(recvData["speed"]!=nil){
-				//speed <- recvData["speed"]
+				speed <- recvData["speed"]
 				//}
 			} //switch
 			//}//if
+			*/
 			log.Infof("recvData:%v,%v", recvData["t"], recvData["x"])
 		})
 	}
