@@ -3,6 +3,8 @@ cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/YaxiongWu/remote-control-server v0.0.0-20220608094526-b63498b97f37 h1:OXAMbHxa8FuV08vu/pzrVU46dPCcIX8u8WCFuwtwg6w=
 github.com/YaxiongWu/remote-control-server v0.0.0-20220608094526-b63498b97f37/go.mod h1:CuqG0esqFm3c1bDm7DcYu7dH46f0AtDY3R50mZa0Vdk=
+github.com/YaxiongWu/remote-control-server v0.0.0-20220622052007-8b9669af5432 h1:MbAWKFCalI45MtpYFSXZCtgbCkFgUFachTAXb8/bqEM=
+github.com/YaxiongWu/remote-control-server v0.0.0-20220622052007-8b9669af5432/go.mod h1:CuqG0esqFm3c1bDm7DcYu7dH46f0AtDY3R50mZa0Vdk=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/blackjack/webcam v0.0.0-20220329180758-ba064708e165 h1:QsIbRyO2tn5eSJZ/skuDqSTo0GWI5H4G1AT7Mm2H0Nw=
 github.com/blackjack/webcam v0.0.0-20220329180758-ba064708e165/go.mod h1:G0X+rEqYPWSq0dG8OMf8M446MtKytzpPjgS3HbdOJZ4=

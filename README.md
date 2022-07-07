@@ -7,7 +7,7 @@
 
 
 工作流程：
-1.视频源向服务器发createSession登记新视频源，这个client需要标记为视频源,client需要state来标记是视频源、等待的控制端、正在控制、等待旁观、正在旁观等
+1.视频源向服务器发register,role=videosoure登记新视频源，这个client需要标记为视频源,client需要state来标记是视频源、等待的控制端、正在控制、等待旁观、正在旁观等
 2.控制方（APP）向服务器发join,不带sdp,轮到连接的时候才发送sdp,但是这个sdp需要设置检测超时，所有要跟其他的sdp分开处理
 3.旁观方(App)的控制跟控制方类似
 

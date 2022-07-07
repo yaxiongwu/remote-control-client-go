@@ -17,6 +17,16 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// type Role int32
+
+// const (
+// 	Admin       Role = 0
+// 	VideoSource Role = 1
+// 	Control     Role = 2
+// 	Observe     Role = 3
+// 	Unknown     Role = 4
+// )
+
 const (
 	API_CHANNEL = "ion-sfu"
 )
@@ -707,7 +717,7 @@ func (r *RTC) onSingalHandle() error {
 
 		switch payload := stream.Payload.(type) {
 		case *rtc.Reply_Register:
-			//处理CreateSessionReply的结果，如重名等
+			//处理RegisterReply的结果，如重名等
 		//case *rtc.Request_Join:
 		//网页或APP的Request_join可直接发到这里来
 		case *rtc.Reply_Join:
@@ -964,15 +974,16 @@ func (r *RTC) Subscribe(trackInfos []*Subscription) error {
 }
 
 // Creata new session
-func (r *RTC) CreateSession(sid, uid string, config ...*JoinConfig) error {
+func (r *RTC) RegisterNewVideoSource(sid, uid string, config ...*JoinConfig) error {
 
 	log.Infof("[C=>S] sid: %v,uid:%v", sid, uid)
 	err := r.signaller.Send(
 		&rtc.Request{
 			Payload: &rtc.Request_Register{
 				Register: &rtc.RegisterRequest{
-					Sid: sid,
-					Uid: uid,
+					Sid:  sid,
+					Uid:  uid,
+					Role: rtc.Role_Admin,
 				},
 			},
 		},

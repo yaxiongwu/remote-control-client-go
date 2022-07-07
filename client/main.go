@@ -35,8 +35,8 @@ func main() {
 	var session, addr string
 	var rtpSenders []*webrtc.RTPSender
 	meidaOpen := false
-	flag.StringVar(&addr, "addr", "192.168.1.199:5551", "ion-sfu grpc addr")
-	//flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
+	//flag.StringVar(&addr, "addr", "192.168.1.199:5551", "ion-sfu grpc addr")
+	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	flag.Parse()
 
@@ -66,7 +66,7 @@ func main() {
 	}
 	log.Infof("rtc.GetSubTransport():%v,rtc.GetSubTransport().GetPeerConnection():%v", rtc.GetSubTransport(), rtc.GetSubTransport().GetPeerConnection())
 
-	err = rtc.CreateSession("ion", "PiVideoSource")
+	err = rtc.RegisterNewVideoSource("ion", "PiVideoSource")
 	// var infos []*sdk.Subscription
 	// infos = append(infos, &sdk.Subscription{
 	// 	TrackId: "ion",
@@ -140,7 +140,7 @@ func main() {
 
 	x264Params, _ := x264.NewParams()
 	x264Params.Preset = x264.PresetMedium
-	x264Params.BitRate = 3_000_000 // 1mbpsvs
+	x264Params.BitRate = 6_000_000 // 1mbpsvs
 
 	codecSelector := mediadevices.NewCodecSelector(
 		mediadevices.WithVideoEncoders(&x264Params),

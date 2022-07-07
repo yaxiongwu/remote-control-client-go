@@ -62,7 +62,7 @@ func main() {
 	}
 	log.Infof("rtc.GetSubTransport():%v,rtc.GetSubTransport().GetPeerConnection():%v", rtc.GetSubTransport(), rtc.GetSubTransport().GetPeerConnection())
 
-	err = rtc.CreateSession("ion", "PiVideoSource")
+	err = rtc.RegisterNewVideoSource("ion", "PiVideoSource")
 	// var infos []*sdk.Subscription
 	// infos = append(infos, &sdk.Subscription{
 	// 	TrackId: "ion",
