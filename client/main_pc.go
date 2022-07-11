@@ -16,7 +16,10 @@ import (
 	//       you can always swap your adapters with our dummy adapters below.
 	// _ "github.com/pion/mediadevices/pkg/driver/videotest"
 	// _ "github.com/pion/mediadevices/pkg/driver/audiotest"
+	//"github.com/pion/mediadevices/pkg/codec/mmal"
+
 	"github.com/pion/mediadevices/pkg/codec/x264"
+
 	//"github.com/pion/mediadevices/pkg/codec/mmal"
 	//"github.com/pion/mediadevices/pkg/codec/vpx"
 	_ "github.com/pion/mediadevices/pkg/driver/camera"     // This is required to register camera adapter
@@ -34,6 +37,7 @@ func main() {
 	// parse flag
 	var session, addr string
 	var rtpSenders []*webrtc.RTPSender
+
 	meidaOpen := false
 	//flag.StringVar(&addr, "addr", "192.168.1.199:5551", "ion-sfu grpc addr")
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
@@ -43,9 +47,11 @@ func main() {
 	//log.SetFlags(log.Ldate | log.Lshortfile)
 
 	//在树莓派上控制时开启
-	//speed := make(chan int)
-	//pi := sdk.Init(26, 19, 13, 6)
-	//pi.SpeedControl(speed)
+	/*
+		speed := make(chan int)
+		pi := sdk.Init(26, 19, 13, 6)
+		pi.SpeedControl(speed)
+	*/
 
 	connector := sdk.NewConnector(addr)
 	rtc, err := sdk.NewRTC(connector)
@@ -67,24 +73,6 @@ func main() {
 	log.Infof("rtc.GetSubTransport():%v,rtc.GetSubTransport().GetPeerConnection():%v", rtc.GetSubTransport(), rtc.GetSubTransport().GetPeerConnection())
 
 	err = rtc.RegisterNewVideoSource("ion", "PiVideoSource")
-	// var infos []*sdk.Subscription
-	// infos = append(infos, &sdk.Subscription{
-	// 	TrackId: "ion",
-	// 	Layer:   "PiVideoSource",
-	// })
-
-	// err = rtc.Subscribe(infos)
-	//err = rtc.Join(session, "videoSource"+sdk.RandomKey(8))
-
-	// dataChanenl, err := rtc.GetSubTransport().GetPeerConnection().CreateDataChannel("test-channel", &webrtc.DataChannelInit{})
-	// log.Infof("dataChannel label:%v,ReadyState:%v", dataChanenl.Label(), dataChanenl.ReadyState())
-	// dataChanenl.OnOpen(func() {
-	// 	log.Infof("OnOpen dataChannel label:%v,ReadyState:%v", dataChanenl.Label(), dataChanenl.ReadyState())
-	// 	dataChanenl.SendText("wuyaxiong test,onopen()")
-	// })
-	// dataChanenl.OnMessage(func(msg webrtc.DataChannelMessage) {
-	// 	log.Infof("get msg from:%v,msg:%v", dataChanenl.Label(), msg)
-	// })
 
 	rtc.OnDataChannel = func(dc *webrtc.DataChannel) {
 		recvData := make(map[string]int)
@@ -101,34 +89,35 @@ func main() {
 				log.Errorf("Unmarshal:err %v", err)
 				return
 			}
-			/*使用树莓派时开启
-			//if(recvData["type"] != nil){
-			switch recvData["type"] {
-			case 1: //方向
-				//每次方向摇杆放开就会回到(0,0)，如果y=0，固定为往前走，这样会导致永远不会往后走
-				  pi.DirectionControl(recvData["x"], recvData["y"])
-			case 2: //速度
-				//if(recvData["speed"]!=nil){
-				speed <- recvData["speed"]
-				//}
-			} //switch
-			//}//if
+			/*使用树莓派时开启*/
+			/*
+					//if recvData["type"] != nil {
+					switch recvData["type"] {
+					case 1: //方向
+						//每次方向摇杆放开就会回到(0,0)，如果y=0，固定为往前走，这样会导致永远不会往后走
+						pi.DirectionControl(recvData["x"], recvData["y"])
+					case 2: //速度
+						//if(recvData["speed"]!=nil){
+						speed <- recvData["speed"]
+						//}
+					} //switch
+					//} //if
+				 log.Infof("recvData:%v,%v", recvData["t"], recvData["x"])
 			*/
-			log.Infof("recvData:%v,%v", recvData["t"], recvData["x"])
 		})
 	}
-	/*
-			 mmalParams, err := mmal.NewParams()
-			 if err != nil {
-			  	panic(err)
-			   }
-			 mmalParams.BitRate = 1_500_000 // 500kbps
-		     codecSelector := mediadevices.NewCodecSelector(
-				      mediadevices.WithVideoEncoders(&mmalParams),
-		     )
-	*/
 
-	// 	log.Infof("c.OnDataChannel = func,dc.ReadyState:%v", dc.ReadyState())
+	/*使用树莓派时切换编码器*/
+	/*
+		mmalParams, err := mmal.NewParams()
+		if err != nil {
+			panic(err)
+		}
+		mmalParams.BitRate = 1_500_000 // 500kbps
+		codecSelector := mediadevices.NewCodecSelector(
+			mediadevices.WithVideoEncoders(&mmalParams),
+		)
+	*/
 
 	x264Params, _ := x264.NewParams()
 	x264Params.Preset = x264.PresetMedium
@@ -137,16 +126,6 @@ func main() {
 	codecSelector := mediadevices.NewCodecSelector(
 		mediadevices.WithVideoEncoders(&x264Params),
 	)
-
-	// vpxParams, err := vpx.NewVP8Params()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// vpxParams.BitRate = 500_000 // 500kbps
-
-	// codecSelector := mediadevices.NewCodecSelector(
-	// 	mediadevices.WithVideoEncoders(&vpxParams),
-	// )
 
 	fmt.Println(mediadevices.EnumerateDevices())
 
