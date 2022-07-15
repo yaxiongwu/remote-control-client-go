@@ -1,0 +1,452 @@
+[2022-07-14 16:21:59.589]  INFO default: [rtc.go:755] [remote-control-client-go.(*RTC).onSingalHandle] [] [description] got offer call s.OnNegotiate sdp={Type:offer SDP:v=0
+o=- 1064058426073351089 2 IN IP4 127.0.0.1
+s=-
+t=0 0
+a=group:BUNDLE 0
+a=extmap-allow-mixed
+a=msid-semantic: WMS
+m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+c=IN IP4 0.0.0.0
+a=ice-ufrag:MxR5
+a=ice-pwd:uPl6i7yfKNP5f2BOoDsm9sLa
+a=ice-options:trickle renomination
+a=fingerprint:sha-256 21:A7:04:1C:E4:09:D9:9C:9F:4A:E0:64:2D:E9:7F:16:54:19:07:B7:4F:92:29:B7:78:8B:1A:27:5A:6E:E8:20
+a=setup:actpass
+a=mid:0
+a=sctp-port:5000
+a=max-message-size:262144
+ parsed:<nil>} 
+[2022-07-14 16:21:59.589]  INFO default: [rtc.go:888] [remote-control-client-go.(*RTC).SendAnswer] [C=>S] [] sdp={answer v=0
+o=- 5965816744527812858 1657786919 IN IP4 0.0.0.0
+s=-
+t=0 0
+a=fingerprint:sha-256 14:ED:BB:A6:87:A4:1A:E5:84:29:7E:A8:66:EB:A7:54:A1:35:9F:50:0D:B3:20:6D:39:CA:CA:B4:FD:EF:36:3E
+a=extmap-allow-mixed
+a=group:BUNDLE 0
+m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+c=IN IP4 0.0.0.0
+a=setup:active
+a=mid:0
+a=sendrecv
+a=sctp-port:5000
+a=ice-ufrag:EbWWDsgQbCZxHPjl
+a=ice-pwd:KCsjwGGLJcuvbmwfAqntZZeUYdzQfkfW
+ 0xc000352480} 
+[2022-07-14 16:21:59.589]  INFO default: [main_pc.go:288] [main.main.func7] Sub Connection state changed: checking 
+[2022-07-14 16:21:59.589]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 39639 typ host generation 0 ufrag MxR5 network-id 4 network-cost 900 0xc0002a7470 0xc000276f48 <nil>} 
+[2022-07-14 16:21:59.589] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,udp4 host 192.168.1.199:56290 
+[2022-07-14 16:21:59.589] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 host 192.168.1.199:56290 target=1 
+[2022-07-14 16:21:59.589] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 39639 typ host generation 0 ufrag MxR5 network-id 4 network-cost 900 0xc0002a7470 0xc000276f48 <nil>} target=1 
+[2022-07-14 16:21:59.590] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,udp6 host 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:35102 
+[2022-07-14 16:21:59.590] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp6 host 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:35102 target=1 
+[2022-07-14 16:21:59.590]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 54912 typ host generation 0 ufrag MxR5 network-id 3 network-cost 900 0xc00048e1f0 0xc000487c00 <nil>} 
+[2022-07-14 16:21:59.590] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 54912 typ host generation 0 ufrag MxR5 network-id 3 network-cost 900 0xc00048e1f0 0xc000487c00 <nil>} target=1 
+[2022-07-14 16:21:59.590] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,udp6 host 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187:44411 
+[2022-07-14 16:21:59.590]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:559267639 1 udp 2122071295 ::1 38132 typ host generation 0 ufrag MxR5 network-id 2 0xc000032650 0xc0002ae0f0 <nil>} 
+[2022-07-14 16:21:59.590] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:559267639 1 udp 2122071295 ::1 38132 typ host generation 0 ufrag MxR5 network-id 2 0xc000032650 0xc0002ae0f0 <nil>} target=1 
+[2022-07-14 16:21:59.590] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp6 host 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187:44411 target=1 
+[2022-07-14 16:21:59.590] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,udp4 host 172.17.0.1:48416 
+[2022-07-14 16:21:59.590] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 host 172.17.0.1:48416 target=1 
+[2022-07-14 16:21:59.612]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 36729 typ host generation 0 ufrag MxR5 network-id 1 0xc00027a860 0xc00011bed8 <nil>} 
+[2022-07-14 16:21:59.612] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 36729 typ host generation 0 ufrag MxR5 network-id 1 0xc00027a860 0xc00011bed8 <nil>} target=1 
+[2022-07-14 16:21:59.700]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag MxR5 network-id 5 network-cost 50 0xc000580070 0xc0000361e0 <nil>} 
+[2022-07-14 16:21:59.700] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag MxR5 network-id 5 network-cost 50 0xc000580070 0xc0000361e0 <nil>} target=1 
+[2022-07-14 16:21:59.709]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1876313031 1 tcp 1518091519 ::1 57863 typ host tcptype passive generation 0 ufrag MxR5 network-id 2 0xc000580200 0xc0000365c8 <nil>} 
+[2022-07-14 16:21:59.709] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1876313031 1 tcp 1518091519 ::1 57863 typ host tcptype passive generation 0 ufrag MxR5 network-id 2 0xc000580200 0xc0000365c8 <nil>} target=1 
+[2022-07-14 16:21:59.709] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,udp4 srflx 113.64.117.134:26262 related 0.0.0.0:55233 
+[2022-07-14 16:21:59.709] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 srflx 113.64.117.134:26262 related 0.0.0.0:55233 target=1 
+[2022-07-14 16:21:59.709]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 36689 typ host tcptype passive generation 0 ufrag MxR5 network-id 1 0xc0005803b0 0xc000036720 <nil>} 
+[2022-07-14 16:21:59.709] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 36689 typ host tcptype passive generation 0 ufrag MxR5 network-id 1 0xc0005803b0 0xc000036720 <nil>} target=1 
+[2022-07-14 16:21:59.823] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,udp6 srflx 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:50189 related :::50189 
+[2022-07-14 16:21:59.823] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp6 srflx 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:50189 related :::50189 target=1 
+[2022-07-14 16:22:00.059]  INFO default: [main_pc.go:288] [main.main.func7] Sub Connection state changed: connected 
+[2022-07-14 16:22:00.060]  INFO default: [rtc.go:865] [remote-control-client-go.(*RTC).SendOffer] [C=>S] [] sdp={offer v=0
+o=- 6050976252012157249 1657786920 IN IP4 0.0.0.0
+s=-
+t=0 0
+a=fingerprint:sha-256 23:DA:32:45:A0:D1:D9:E9:85:F8:16:B2:C1:19:C8:87:BD:71:1F:8B:EE:07:BE:22:A4:3A:CA:97:1E:FC:A6:F3
+a=extmap-allow-mixed
+a=group:BUNDLE 0 1 2
+m=video 9 UDP/TLS/RTP/SAVPF 96 98 100 102 127 125 108 123
+c=IN IP4 0.0.0.0
+a=setup:actpass
+a=mid:0
+a=ice-ufrag:PXdeByWTcKGBWnQf
+a=ice-pwd:jhIRXqxdhGftOtiWLmvJYiCTReSDsGVr
+a=rtcp-mux
+a=rtcp-rsize
+a=rtpmap:96 VP8/90000
+a=rtcp-fb:96 goog-remb 
+a=rtcp-fb:96 ccm fir
+a=rtcp-fb:96 nack 
+a=rtcp-fb:96 nack pli
+a=rtpmap:98 VP9/90000
+a=fmtp:98 profile-id=0
+a=rtcp-fb:98 goog-remb 
+a=rtcp-fb:98 ccm fir
+a=rtcp-fb:98 nack 
+a=rtcp-fb:98 nack pli
+a=rtpmap:100 VP9/90000
+a=fmtp:100 profile-id=1
+a=rtcp-fb:100 goog-remb 
+a=rtcp-fb:100 ccm fir
+a=rtcp-fb:100 nack 
+a=rtcp-fb:100 nack pli
+a=rtpmap:102 H264/90000
+a=fmtp:102 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f
+a=rtcp-fb:102 goog-remb 
+a=rtcp-fb:102 ccm fir
+a=rtcp-fb:102 nack 
+a=rtcp-fb:102 nack pli
+a=rtpmap:127 H264/90000
+a=fmtp:127 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42001f
+a=rtcp-fb:127 goog-remb 
+a=rtcp-fb:127 ccm fir
+a=rtcp-fb:127 nack 
+a=rtcp-fb:127 nack pli
+a=rtpmap:125 H264/90000
+a=fmtp:125 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f
+a=rtcp-fb:125 goog-remb 
+a=rtcp-fb:125 ccm fir
+a=rtcp-fb:125 nack 
+a=rtcp-fb:125 nack pli
+a=rtpmap:108 H264/90000
+a=fmtp:108 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42e01f
+a=rtcp-fb:108 goog-remb 
+a=rtcp-fb:108 ccm fir
+a=rtcp-fb:108 nack 
+a=rtcp-fb:108 nack pli
+a=rtpmap:123 H264/90000
+a=fmtp:123 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=640032
+a=rtcp-fb:123 goog-remb 
+a=rtcp-fb:123 ccm fir
+a=rtcp-fb:123 nack 
+a=rtcp-fb:123 nack pli
+a=extmap:1 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01
+a=extmap:4 urn:ietf:params:rtp-hdrext:framemarking
+a=ssrc:764214905 cname:db8e83a0-e7b5-4c04-8ace-bb2472846508
+a=ssrc:764214905 msid:ae82b142-10c7-4b6f-ac69-271f92b591ba 71937ae9-ac7b-4bfd-b831-c4b56cad040a
+a=ssrc:764214905 mslabel:ae82b142-10c7-4b6f-ac69-271f92b591ba
+a=ssrc:764214905 label:71937ae9-ac7b-4bfd-b831-c4b56cad040a
+a=msid:1f6ad50a-541d-4d17-a817-d2d2ff5fe437 71937ae9-ac7b-4bfd-b831-c4b56cad040a
+a=sendrecv
+m=audio 9 UDP/TLS/RTP/SAVPF 111
+c=IN IP4 0.0.0.0
+a=setup:actpass
+a=mid:1
+a=ice-ufrag:PXdeByWTcKGBWnQf
+a=ice-pwd:jhIRXqxdhGftOtiWLmvJYiCTReSDsGVr
+a=rtcp-mux
+a=rtcp-rsize
+a=rtpmap:111 opus/48000/2
+a=fmtp:111 minptime=10;useinbandfec=1
+a=extmap:1 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+a=extmap:3 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=ssrc:1346785892 cname:8f018f91-13b3-40ba-81b7-0a00bb0e7eda
+a=ssrc:1346785892 msid:c4f660a4-91d3-4e95-88ad-dabd29449c61 bfd791c1-0efa-4847-820f-9591a61bb5f6
+a=ssrc:1346785892 mslabel:c4f660a4-91d3-4e95-88ad-dabd29449c61
+a=ssrc:1346785892 label:bfd791c1-0efa-4847-820f-9591a61bb5f6
+a=msid:5b36541d-e09c-4bcf-9851-957a376dba95 bfd791c1-0efa-4847-820f-9591a61bb5f6
+a=sendrecv
+m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+c=IN IP4 0.0.0.0
+a=setup:actpass
+a=mid:2
+a=sendrecv
+a=sctp-port:5000
+a=ice-ufrag:PXdeByWTcKGBWnQf
+a=ice-pwd:jhIRXqxdhGftOtiWLmvJYiCTReSDsGVr
+ 0xc0004d2480} 
+[2022-07-14 16:22:00.060] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp4 host 192.168.1.199:55857 
+[2022-07-14 16:22:00.060] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp6 host 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:46198 
+[2022-07-14 16:22:00.060] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp6 host 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187:48226 
+[2022-07-14 16:22:00.060] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp4 host 172.17.0.1:53334 
+[2022-07-14 16:22:00.171] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp4 srflx 113.64.117.134:26264 related 0.0.0.0:55144 
+[2022-07-14 16:22:00.283] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp6 srflx 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:40006 related :::40006 
+[2022-07-14 16:22:00.290] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,udp4 srflx 113.64.117.134:26265 related 0.0.0.0:37666 
+[2022-07-14 16:22:00.290] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,0,<nil> 
+[2022-07-14 16:22:00.290]  INFO default: [transport.go:65] [remote-control-client-go.NewTransport.func1] gather candidate done 
+[2022-07-14 16:22:00.338]  INFO default: [rtc.go:761] [remote-control-client-go.(*RTC).onSingalHandle] [] [description] got answer call sdp={Type:answer SDP:v=0
+o=- 2594535428828417815 2 IN IP4 127.0.0.1
+s=-
+t=0 0
+a=group:BUNDLE 0 1 2
+a=extmap-allow-mixed
+a=msid-semantic: WMS
+m=video 9 UDP/TLS/RTP/SAVPF 96 98 125
+c=IN IP4 0.0.0.0
+a=rtcp:9 IN IP4 0.0.0.0
+a=ice-ufrag:SSjY
+a=ice-pwd:pTfF9KvKeo1kU/kUrsnsIb6L
+a=ice-options:trickle renomination
+a=fingerprint:sha-256 BA:84:00:9E:43:62:E8:94:03:C7:2B:02:38:FA:AF:8E:24:9E:0A:86:69:06:DA:9B:DE:BC:8D:5A:FD:45:11:19
+a=setup:active
+a=mid:0
+a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01
+a=extmap:1 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+a=recvonly
+a=rtcp-mux
+a=rtcp-rsize
+a=rtpmap:96 VP8/90000
+a=rtcp-fb:96 goog-remb
+a=rtcp-fb:96 ccm fir
+a=rtcp-fb:96 nack
+a=rtcp-fb:96 nack pli
+a=rtpmap:98 VP9/90000
+a=rtcp-fb:98 goog-remb
+a=rtcp-fb:98 ccm fir
+a=rtcp-fb:98 nack
+a=rtcp-fb:98 nack pli
+a=rtpmap:125 H264/90000
+a=rtcp-fb:125 goog-remb
+a=rtcp-fb:125 ccm fir
+a=rtcp-fb:125 nack
+a=rtcp-fb:125 nack pli
+a=fmtp:125 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f
+m=audio 9 UDP/TLS/RTP/SAVPF 111
+c=IN IP4 0.0.0.0
+a=rtcp:9 IN IP4 0.0.0.0
+a=ice-ufrag:SSjY
+a=ice-pwd:pTfF9KvKeo1kU/kUrsnsIb6L
+a=ice-options:trickle renomination
+a=fingerprint:sha-256 BA:84:00:9E:43:62:E8:94:03:C7:2B:02:38:FA:AF:8E:24:9E:0A:86:69:06:DA:9B:DE:BC:8D:5A:FD:45:11:19
+a=setup:active
+a=mid:1
+a=extmap:3 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=extmap:1 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+a=recvonly
+a=rtcp-mux
+a=rtpmap:111 opus/48000/2
+a=fmtp:111 minptime=10;useinbandfec=1
+m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+c=IN IP4 0.0.0.0
+a=ice-ufrag:SSjY
+a=ice-pwd:pTfF9KvKeo1kU/kUrsnsIb6L
+a=ice-options:trickle renomination
+a=fingerprint:sha-256 BA:84:00:9E:43:62:E8:94:03:C7:2B:02:38:FA:AF:8E:24:9E:0A:86:69:06:DA:9B:DE:BC:8D:5A:FD:45:11:19
+a=setup:active
+a=mid:2
+a=sctp-port:5000
+ parsed:<nil>} 
+[2022-07-14 16:22:00.380] DEBUG default: [rtc.go:241] [remote-control-client-go.(*RTC).ReStart.func3] [S=>C] id= [r.sub.pc.OnDataChannel] got dc ion-sfu 
+[2022-07-14 16:22:00.380] DEBUG default: [rtc.go:243] [remote-control-client-go.(*RTC).ReStart.func3]  got dc ion-sfu 
+[2022-07-14 16:22:00.380] DEBUG default: [rtc.go:247] [remote-control-client-go.(*RTC).ReStart.func3.1] r.sub.api.OnOpen,state:open, dc ion-sfu 
+x264 [info]: using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+x264 [info]: profile High, level 3.1
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp4 host 192.168.1.199:55857 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 host 192.168.1.199:55857 target=0 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp6 host 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:46198 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp6 host 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:46198 target=0 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp6 host 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187:48226 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp6 host 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187:48226 target=0 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp4 host 172.17.0.1:53334 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 host 172.17.0.1:53334 target=0 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp4 srflx 113.64.117.134:26264 related 0.0.0.0:55144 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 srflx 113.64.117.134:26264 related 0.0.0.0:55144 target=0 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp6 srflx 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:40006 related :::40006 
+[2022-07-14 16:22:00.473]  INFO default: [main_pc.go:83] [main.main.func1] Pub Connection state changed: checking 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp6 srflx 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4:40006 related :::40006 target=0 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:647] [remote-control-client-go.(*RTC).setRemoteSDP] id= r.rtc.trickle cand=udp4 srflx 113.64.117.134:26265 related 0.0.0.0:37666 
+[2022-07-14 16:22:00.473] DEBUG default: [rtc.go:840] [remote-control-client-go.(*RTC).SendTrickle] [C=>S] [] candidate=udp4 srflx 113.64.117.134:26265 related 0.0.0.0:37666 target=0 
+[2022-07-14 16:22:00.473]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 53110 typ host generation 0 ufrag SSjY network-id 4 network-cost 900 0xc0002a7940 0xc0002770e0 <nil>} 
+[2022-07-14 16:22:00.474] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 53110 typ host generation 0 ufrag SSjY network-id 4 network-cost 900 0xc0002a7940 0xc0002770e0 <nil>} target=0 
+[2022-07-14 16:22:00.474]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 49547 typ host generation 0 ufrag SSjY network-id 3 network-cost 900 0xc0002a7ac0 0xc000277180 <nil>} 
+[2022-07-14 16:22:00.474] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 49547 typ host generation 0 ufrag SSjY network-id 3 network-cost 900 0xc0002a7ac0 0xc000277180 <nil>} target=0 
+[2022-07-14 16:22:00.474]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:559267639 1 udp 2122071295 ::1 52968 typ host generation 0 ufrag SSjY network-id 2 0xc0002a7c40 0xc000277220 <nil>} 
+[2022-07-14 16:22:00.474] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:559267639 1 udp 2122071295 ::1 52968 typ host generation 0 ufrag SSjY network-id 2 0xc0002a7c40 0xc000277220 <nil>} target=0 
+[2022-07-14 16:22:00.474]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 59112 typ host generation 0 ufrag SSjY network-id 1 0xc0002a7dc0 0xc0002772c0 <nil>} 
+[2022-07-14 16:22:00.475] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 59112 typ host generation 0 ufrag SSjY network-id 1 0xc0002a7dc0 0xc0002772c0 <nil>} target=0 
+[2022-07-14 16:22:00.475]  INFO default: [rtc.go:755] [remote-control-client-go.(*RTC).onSingalHandle] [] [description] got offer call s.OnNegotiate sdp={Type:offer SDP:v=0
+o=- 1064058426073351089 3 IN IP4 127.0.0.1
+s=-
+t=0 0
+a=extmap-allow-mixed
+a=msid-semantic: WMS 51507ac3-0c1e-4653-9884-bb921517ead3
+a=group:BUNDLE 0 1 2
+m=application 54912 UDP/DTLS/SCTP webrtc-datachannel
+c=IN IP4 10.76.3.224
+a=setup:actpass
+a=mid:0
+a=ice-ufrag:MxR5
+a=ice-pwd:uPl6i7yfKNP5f2BOoDsm9sLa
+a=fingerprint:sha-256 21:A7:04:1C:E4:09:D9:9C:9F:4A:E0:64:2D:E9:7F:16:54:19:07:B7:4F:92:29:B7:78:8B:1A:27:5A:6E:E8:20
+a=candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 39639 typ host generation 0 network-id 4 network-cost 900
+a=candidate:1681860480 1 udp 2122129151 10.76.3.224 54912 typ host generation 0 network-id 3 network-cost 900
+a=candidate:559267639 1 udp 2122071295 ::1 38132 typ host generation 0 network-id 2
+a=candidate:1510613869 1 udp 2121998079 127.0.0.1 36729 typ host generation 0 network-id 1
+a=candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 network-id 5 network-cost 50
+a=candidate:1876313031 1 tcp 1518091519 ::1 57863 typ host tcptype passive generation 0 network-id 2
+a=candidate:344579997 1 tcp 1518018303 127.0.0.1 36689 typ host tcptype passive generation 0 network-id 1
+a=ice-options:trickle
+a=sctp-port:5000
+a=max-message-size:262144
+m=audio 9 UDP/TLS/RTP/SAVPF 111
+c=IN IP4 0.0.0.0
+a=rtpmap:111 opus/48000/2
+a=fmtp:111 minptime=10;useinbandfec=1
+a=rtcp:9 IN IP4 0.0.0.0
+a=rtcp-fb:111 transport-cc
+a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time
+a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01
+a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:5 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+a=extmap:6 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id
+a=setup:actpass
+a=mid:1
+a=msid:51507ac3-0c1e-4653-9884-bb921517ead3 3deb291a-405f-4b63-87ed-3a4df9101306
+a=sendonly
+a=ice-ufrag:MxR5
+a=ice-pwd:uPl6i7yfKNP5f2BOoDsm9sLa
+a=fingerprint:sha-256 21:A7:04:1C:E4:09:D9:9C:9F:4A:E0:64:2D:E9:7F:16:54:19:07:B7:4F:92:29:B7:78:8B:1A:27:5A:6E:E8:20
+a=ice-options:trickle
+a=ssrc:3293569536 cname:KOzEqNsI/FrDwvdg
+a=ssrc:3293569536 msid:51507ac3-0c1e-4653-9884-bb921517ead3 3deb291a-405f-4b63-87ed-3a4df9101306
+a=ssrc:3293569536 mslabel:51507ac3-0c1e-4653-9884-bb921517ead3
+a=ssrc:3293569536 label:3deb291a-405f-4b63-87ed-3a4df9101306
+a=rtcp-mux
+m=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 102 0 8 106 105 13 110 112 113 126
+c=IN IP4 0.0.0.0
+a=rtpmap:111 opus/48000/2
+a=rtpmap:103 ISAC/16000
+a=rtpmap:104 ISAC/32000
+a=rtpmap:9 G722/8000
+a=rtpmap:102 ILBC/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:106 CN/32000
+a=rtpmap:105 CN/16000
+a=rtpmap:13 CN/8000
+a=rtpmap:110 telephone-event/48000
+a=rtpmap:112 telephone-event/32000
+a=rtpmap:113 telephone-event/16000
+a=rtpmap:126 telephone-event/8000
+a=fmtp:111 minptime=10;useinbandfec=1
+a=rtcp:9 IN IP4 0.0.0.0
+a=rtcp-fb:111 transport-cc
+a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time
+a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01
+a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:5 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+a=extmap:6 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id
+a=setup:actpass
+a=mid:2
+a=msid:a5afc352-ad3f-45b0-8a2b-7b4598be7321 d250c52f-2f36-4110-bb75-640060de8c71
+a=sendonly
+a=ice-ufrag:MxR5
+a=ice-pwd:uPl6i7yfKNP5f2BOoDsm9sLa
+a=fingerprint:sha-256 21:A7:04:1C:E4:09:D9:9C:9F:4A:E0:64:2D:E9:7F:16:54:19:07:B7:4F:92:29:B7:78:8B:1A:27:5A:6E:E8:20
+a=ice-options:trickle
+a=ssrc:4102412245 cname:KOzEqNsI/FrDwvdg
+a=ssrc:4102412245 msid:a5afc352-ad3f-45b0-8a2b-7b4598be7321 d250c52f-2f36-4110-bb75-640060de8c71
+a=ssrc:4102412245 mslabel:a5afc352-ad3f-45b0-8a2b-7b4598be7321
+a=ssrc:4102412245 label:d250c52f-2f36-4110-bb75-640060de8c71
+a=rtcp-mux
+ parsed:<nil>} 
+[2022-07-14 16:22:00.475]  INFO default: [rtc.go:888] [remote-control-client-go.(*RTC).SendAnswer] [C=>S] [] sdp={answer v=0
+o=- 5965816744527812858 1657786920 IN IP4 0.0.0.0
+s=-
+t=0 0
+a=fingerprint:sha-256 14:ED:BB:A6:87:A4:1A:E5:84:29:7E:A8:66:EB:A7:54:A1:35:9F:50:0D:B3:20:6D:39:CA:CA:B4:FD:EF:36:3E
+a=extmap-allow-mixed
+a=group:BUNDLE 0 1 2
+m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+c=IN IP4 0.0.0.0
+a=setup:active
+a=mid:0
+a=sendrecv
+a=sctp-port:5000
+a=ice-ufrag:EbWWDsgQbCZxHPjl
+a=ice-pwd:KCsjwGGLJcuvbmwfAqntZZeUYdzQfkfW
+a=candidate:375476284 1 udp 2130706431 192.168.1.199 56290 typ host
+a=candidate:375476284 2 udp 2130706431 192.168.1.199 56290 typ host
+a=candidate:233762139 1 udp 2130706431 172.17.0.1 48416 typ host
+a=candidate:233762139 2 udp 2130706431 172.17.0.1 48416 typ host
+a=candidate:685776463 1 udp 1694498815 113.64.117.134 26262 typ srflx raddr 0.0.0.0 rport 55233
+a=candidate:685776463 2 udp 1694498815 113.64.117.134 26262 typ srflx raddr 0.0.0.0 rport 55233
+a=candidate:3969404167 1 udp 2130706431 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4 35102 typ host
+a=candidate:3969404167 2 udp 2130706431 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4 35102 typ host
+a=candidate:3133579690 1 udp 2130706431 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187 44411 typ host
+a=candidate:3133579690 2 udp 2130706431 240e:3b1:9ed4:9e40:d817:51ab:85e3:d187 44411 typ host
+a=candidate:3466007188 1 udp 1694498815 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4 50189 typ srflx raddr :: rport 50189
+a=candidate:3466007188 2 udp 1694498815 240e:3b1:9ed4:9e40:329c:23ff:fe57:63f4 50189 typ srflx raddr :: rport 50189
+m=audio 9 UDP/TLS/RTP/SAVPF 111
+c=IN IP4 0.0.0.0
+a=setup:active
+a=mid:1
+a=ice-ufrag:EbWWDsgQbCZxHPjl
+a=ice-pwd:KCsjwGGLJcuvbmwfAqntZZeUYdzQfkfW
+a=rtcp-mux
+a=rtcp-rsize
+a=rtpmap:111 opus/48000/2
+a=fmtp:111 minptime=10;useinbandfec=1
+a=rtcp-fb:111 transport-cc 
+a=recvonly
+m=audio 9 UDP/TLS/RTP/SAVPF 111
+c=IN IP4 0.0.0.0
+a=setup:active
+a=mid:2
+a=ice-ufrag:EbWWDsgQbCZxHPjl
+a=ice-pwd:KCsjwGGLJcuvbmwfAqntZZeUYdzQfkfW
+a=rtcp-mux
+a=rtcp-rsize
+a=rtpmap:111 opus/48000/2
+a=fmtp:111 minptime=10;useinbandfec=1
+a=rtcp-fb:111 transport-cc 
+a=recvonly
+ 0xc00021bd40} 
+[2022-07-14 16:22:00.482]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 47530 typ host generation 0 ufrag MxR5 network-id 4 network-cost 900 0xc0017d4aa0 0xc002f76038 <nil>} 
+[2022-07-14 16:22:00.482] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 47530 typ host generation 0 ufrag MxR5 network-id 4 network-cost 900 0xc0017d4aa0 0xc002f76038 <nil>} target=1 
+[2022-07-14 16:22:00.482]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 37603 typ host generation 0 ufrag MxR5 network-id 3 network-cost 900 0xc0017d4c20 0xc002f760e0 <nil>} 
+[2022-07-14 16:22:00.482] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 37603 typ host generation 0 ufrag MxR5 network-id 3 network-cost 900 0xc0017d4c20 0xc002f760e0 <nil>} target=1 
+[2022-07-14 16:22:00.483]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:559267639 1 udp 2122071295 ::1 35153 typ host generation 0 ufrag MxR5 network-id 2 0xc0017d4da0 0xc002f76180 <nil>} 
+[2022-07-14 16:22:00.483] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:559267639 1 udp 2122071295 ::1 35153 typ host generation 0 ufrag MxR5 network-id 2 0xc0017d4da0 0xc002f76180 <nil>} target=1 
+[2022-07-14 16:22:00.483]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 48217 typ host generation 0 ufrag MxR5 network-id 1 0xc0017d4f20 0xc002f76220 <nil>} 
+[2022-07-14 16:22:00.483] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 48217 typ host generation 0 ufrag MxR5 network-id 1 0xc0017d4f20 0xc002f76220 <nil>} target=1 
+[2022-07-14 16:22:00.483]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 41571 typ host generation 0 ufrag MxR5 network-id 4 network-cost 900 0xc0017d50a0 0xc002f762c0 <nil>} 
+[2022-07-14 16:22:00.483] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2084816338 1 udp 2122197247 2409:8954:9e88:1ea:54b7:a7c5:a2ba:3200 41571 typ host generation 0 ufrag MxR5 network-id 4 network-cost 900 0xc0017d50a0 0xc002f762c0 <nil>} target=1 
+[2022-07-14 16:22:00.483]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 50515 typ host generation 0 ufrag MxR5 network-id 3 network-cost 900 0xc0017d5220 0xc002f76360 <nil>} 
+[2022-07-14 16:22:00.483] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1681860480 1 udp 2122129151 10.76.3.224 50515 typ host generation 0 ufrag MxR5 network-id 3 network-cost 900 0xc0017d5220 0xc002f76360 <nil>} target=1 
+[2022-07-14 16:22:00.483]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:559267639 1 udp 2122071295 ::1 50238 typ host generation 0 ufrag MxR5 network-id 2 0xc0017d53a0 0xc002f76400 <nil>} 
+[2022-07-14 16:22:00.484] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:559267639 1 udp 2122071295 ::1 50238 typ host generation 0 ufrag MxR5 network-id 2 0xc0017d53a0 0xc002f76400 <nil>} target=1 
+[2022-07-14 16:22:00.484]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 39369 typ host generation 0 ufrag MxR5 network-id 1 0xc0017d5520 0xc002f764a0 <nil>} 
+[2022-07-14 16:22:00.484] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1510613869 1 udp 2121998079 127.0.0.1 39369 typ host generation 0 ufrag MxR5 network-id 1 0xc0017d5520 0xc002f764a0 <nil>} target=1 
+[2022-07-14 16:22:00.484]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag SSjY network-id 5 network-cost 50 0xc0017d56a0 0xc002f76540 <nil>} 
+[2022-07-14 16:22:00.484] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag SSjY network-id 5 network-cost 50 0xc0017d56a0 0xc002f76540 <nil>} target=0 
+[2022-07-14 16:22:00.485]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:1876313031 1 tcp 1518091519 ::1 41823 typ host tcptype passive generation 0 ufrag SSjY network-id 2 0xc0017d5830 0xc002f765e0 <nil>} 
+[2022-07-14 16:22:00.485] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1876313031 1 tcp 1518091519 ::1 41823 typ host tcptype passive generation 0 ufrag SSjY network-id 2 0xc0017d5830 0xc002f765e0 <nil>} target=0 
+[2022-07-14 16:22:00.485]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 36359 typ host tcptype passive generation 0 ufrag SSjY network-id 1 0xc0017d59b0 0xc002f76680 <nil>} 
+[2022-07-14 16:22:00.485] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 36359 typ host tcptype passive generation 0 ufrag SSjY network-id 1 0xc0017d59b0 0xc002f76680 <nil>} target=0 
+[2022-07-14 16:22:00.485]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag SSjY network-id 5 network-cost 50 0xc0017d5b30 0xc002f76720 <nil>} 
+[2022-07-14 16:22:00.485] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag SSjY network-id 5 network-cost 50 0xc0017d5b30 0xc002f76720 <nil>} target=0 
+[2022-07-14 16:22:00.485]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:1876313031 1 tcp 1518091519 ::1 49945 typ host tcptype passive generation 0 ufrag SSjY network-id 2 0xc0017d5cc0 0xc002f767c0 <nil>} 
+[2022-07-14 16:22:00.486] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1876313031 1 tcp 1518091519 ::1 49945 typ host tcptype passive generation 0 ufrag SSjY network-id 2 0xc0017d5cc0 0xc002f767c0 <nil>} target=0 
+[2022-07-14 16:22:00.486]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 46869 typ host tcptype passive generation 0 ufrag SSjY network-id 1 0xc0017d5e40 0xc002f76860 <nil>} 
+[2022-07-14 16:22:00.486] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 46869 typ host tcptype passive generation 0 ufrag SSjY network-id 1 0xc0017d5e40 0xc002f76860 <nil>} target=0 
+[2022-07-14 16:22:00.486]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag SSjY network-id 5 network-cost 50 0xc0017d5fc0 0xc002f76900 <nil>} 
+[2022-07-14 16:22:00.486] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag SSjY network-id 5 network-cost 50 0xc0017d5fc0 0xc002f76900 <nil>} target=0 
+[2022-07-14 16:22:00.490]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:1876313031 1 tcp 1518091519 ::1 41751 typ host tcptype passive generation 0 ufrag SSjY network-id 2 0xc000117470 0xc000308dd8 <nil>} 
+[2022-07-14 16:22:00.497] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1876313031 1 tcp 1518091519 ::1 41751 typ host tcptype passive generation 0 ufrag SSjY network-id 2 0xc000117470 0xc000308dd8 <nil>} target=0 
+[2022-07-14 16:22:00.497]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=PUBLISHER candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 44463 typ host tcptype passive generation 0 ufrag SSjY network-id 1 0xc0001175f0 0xc000308f90 <nil>} 
+[2022-07-14 16:22:00.497] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 44463 typ host tcptype passive generation 0 ufrag SSjY network-id 1 0xc0001175f0 0xc000308f90 <nil>} target=0 
+[2022-07-14 16:22:00.497]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag MxR5 network-id 5 network-cost 50 0xc000117770 0xc0003090a0 <nil>} 
+[2022-07-14 16:22:00.497] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag MxR5 network-id 5 network-cost 50 0xc000117770 0xc0003090a0 <nil>} target=1 
+[2022-07-14 16:22:00.497]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1876313031 1 tcp 1518091519 ::1 49259 typ host tcptype passive generation 0 ufrag MxR5 network-id 2 0xc000117900 0xc000309140 <nil>} 
+[2022-07-14 16:22:00.497] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1876313031 1 tcp 1518091519 ::1 49259 typ host tcptype passive generation 0 ufrag MxR5 network-id 2 0xc000117900 0xc000309140 <nil>} target=1 
+[2022-07-14 16:22:00.512]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 52025 typ host tcptype passive generation 0 ufrag MxR5 network-id 1 0xc000302770 0xc000519b70 <nil>} 
+[2022-07-14 16:22:00.512] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 52025 typ host tcptype passive generation 0 ufrag MxR5 network-id 1 0xc000302770 0xc000519b70 <nil>} target=1 
+[2022-07-14 16:22:00.512]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag MxR5 network-id 5 network-cost 50 0xc000302970 0xc000519c10 <nil>} 
+[2022-07-14 16:22:00.512] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:2960307908 1 tcp 1518283007 2409:8154:9e88:4fc9:1:1:abc6:d73d 9 typ host tcptype active generation 0 ufrag MxR5 network-id 5 network-cost 50 0xc000302970 0xc000519c10 <nil>} target=1 
+[2022-07-14 16:22:00.512]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:1876313031 1 tcp 1518091519 ::1 50251 typ host tcptype passive generation 0 ufrag MxR5 network-id 2 0xc000302b20 0xc000519cb0 <nil>} 
+[2022-07-14 16:22:00.512] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:1876313031 1 tcp 1518091519 ::1 50251 typ host tcptype passive generation 0 ufrag MxR5 network-id 2 0xc000302b20 0xc000519cb0 <nil>} target=1 
+[2022-07-14 16:22:00.512]  INFO default: [rtc.go:770] [remote-control-client-go.(*RTC).onSingalHandle] [] [trickle] type=SUBSCRIBER candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 37107 typ host tcptype passive generation 0 ufrag MxR5 network-id 1 0xc000302ca0 0xc000519d50 <nil>} 
+[2022-07-14 16:22:00.512] DEBUG default: [rtc.go:427] [remote-control-client-go.(*RTC).trickle] [S=>C] id= candidate={candidate:344579997 1 tcp 1518018303 127.0.0.1 37107 typ host tcptype passive generation 0 ufrag MxR5 network-id 1 0xc000302ca0 0xc000519d50 <nil>} target=1 
+[2022-07-14 16:22:04.604] DEBUG default: [transport.go:62] [remote-control-client-go.NewTransport.func1] t.pc.OnICECandidate,1,<nil> 
+[2022-07-14 16:22:04.604]  INFO default: [transport.go:65] [remote-control-client-go.NewTransport.func1] gather candidate done 
+[2022-07-14 16:22:30.591]  INFO default: [main_pc.go:83] [main.main.func1] Pub Connection state changed: failed 

@@ -13,6 +13,7 @@ import (
 	"github.com/YaxiongWu/remote-control-server/pkg/proto/rtc"
 	log "github.com/pion/ion-log"
 	"github.com/pion/webrtc/v3"
+	"github.com/pion/webrtc/v3/pkg/media"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -281,29 +282,29 @@ func (r *RTC) Join(sid, uid string, config ...*JoinConfig) error {
 		log.Infof("[S=>C] got track streamId=%v kind=%v ssrc=%v ", track.StreamID(), track.Kind(), track.SSRC())
 
 		// user define
-		if r.OnTrack != nil {
-			r.OnTrack(track, receiver)
-		} else {
-			//for read and calc
-			b := make([]byte, 1500)
-			for {
-				select {
-				case <-r.notify:
-					return
-				default:
-					n, _, err := track.Read(b)
-					if err != nil {
-						if err == io.EOF {
-							log.Errorf("id=%v track.ReadRTP err=%v", r.uid, err)
-							return
-						}
-						log.Errorf("id=%v Error reading track rtp %s", r.uid, err)
-						continue
+		//	if r.OnTrack != nil {
+		//	r.OnTrack(track, receiver)
+		//	} else {
+		//for read and calc
+		b := make([]byte, 1500)
+		for {
+			select {
+			case <-r.notify:
+				return
+			default:
+				n, _, err := track.Read(b)
+				if err != nil {
+					if err == io.EOF {
+						log.Errorf("id=%v track.ReadRTP err=%v", r.uid, err)
+						return
 					}
-					r.recvByte += n
+					log.Errorf("id=%v Error reading track rtp %s", r.uid, err)
+					continue
 				}
+				r.recvByte += n
 			}
 		}
+		//}
 	})
 
 	r.sub.pc.OnDataChannel(func(dc *webrtc.DataChannel) {
@@ -443,7 +444,7 @@ func (r *RTC) trickle(candidate webrtc.ICECandidateInit, target Target) {
 
 // negotiate sub negotiate
 func (r *RTC) negotiate(sdp webrtc.SessionDescription) error {
-	log.Debugf("[S=>C] id=%v Negotiate sdp=%v", r.uid, sdp)
+	//log.Debugf("[S=>C] id=%v Negotiate sdp=%v", r.uid, sdp)
 	// 1.sub set remote sdp
 	err := r.sub.pc.SetRemoteDescription(sdp)
 	if err != nil {
@@ -757,7 +758,7 @@ func (r *RTC) onSingalHandle() error {
 					log.Errorf("error: %v", err)
 				}
 			} else if sdp.Type == webrtc.SDPTypeAnswer {
-				//log.Infof("[%v] [description] got answer call sdp=%+v", r.uid, sdp)
+				log.Infof("[%v] [description] got answer call sdp=%+v", r.uid, sdp)
 				err = r.setRemoteSDP(sdp)
 				if err != nil {
 					log.Errorf("[%v] [description] setRemoteSDP err=%s", r.uid, err)
@@ -861,7 +862,7 @@ func (r *RTC) SendTrickle(candidate *webrtc.ICECandidate, target Target) {
 }
 
 func (r *RTC) SendOffer(sdp webrtc.SessionDescription) error {
-	//log.Infof("[C=>S] [%v] sdp=%v", r.uid, sdp)
+	log.Infof("[C=>S] [%v] sdp=%v", r.uid, sdp)
 	go r.onSingalHandleOnce()
 	r.Lock()
 	err := r.signaller.Send(
@@ -972,6 +973,24 @@ func (r *RTC) Subscribe(trackInfos []*Subscription) error {
 	// })
 	return err
 }
+func saveToDisk(i media.Writer, track *webrtc.TrackRemote) {
+	defer func() {
+		if err := i.Close(); err != nil {
+			panic(err)
+		}
+	}()
+
+	for {
+		packet, _, err := track.ReadRTP()
+		if err != nil {
+			panic(err)
+		}
+
+		if err := i.WriteRTP(packet); err != nil {
+			panic(err)
+		}
+	}
+}
 
 // Creata new session
 func (r *RTC) RegisterNewVideoSource(sid, uid string, config ...*JoinConfig) error {
@@ -988,6 +1007,63 @@ func (r *RTC) RegisterNewVideoSource(sid, uid string, config ...*JoinConfig) err
 			},
 		},
 	)
+
+	r.pub.pc.OnTrack(func(track *webrtc.TrackRemote, receiver *webrtc.RTPReceiver) {
+		log.Infof("[S=>C] got track streamId=%v kind=%v ssrc=%v ", track.StreamID(), track.Kind(), track.SSRC())
+
+		// user define
+		// if r.OnTrack != nil {
+		// 	r.OnTrack(track, receiver)
+		// } else {
+		// 	//for read and calc
+		// 	b := make([]byte, 1500)
+		// 	for {
+		// 		select {
+		// 		case <-r.notify:
+		// 			return
+		// 		default:
+		// 			n, _, err := track.Read(b)
+		// 			if err != nil {
+		// 				if err == io.EOF {
+		// 					log.Errorf("id=%v track.ReadRTP err=%v", r.uid, err)
+		// 					return
+		// 				}
+		// 				log.Errorf("id=%v Error reading track rtp %s", r.uid, err)
+		// 				continue
+		// 			}
+		// 			r.recvByte += n
+		// 		}
+		// 	}
+		// }
+
+	})
+
+	r.sub.pc.OnTrack(func(track *webrtc.TrackRemote, receiver *webrtc.RTPReceiver) {
+		log.Infof("[S=>C] got track streamId=%v kind=%v ssrc=%v ", track.StreamID(), track.Kind(), track.SSRC())
+		if r.OnTrack != nil {
+			r.OnTrack(track, receiver)
+		}
+		/*
+			codec := track.Codec()
+			if codec.MimeType == "audio/opus" {
+				fmt.Println("Got Opus track, saving to disk as output.ogg,clockRate:%v,channels:%v", codec.ClockRate, codec.Channels)
+				i, oggNewErr := oggwriter.New("output.ogg", codec.ClockRate, codec.Channels)
+				if oggNewErr != nil {
+					panic(oggNewErr)
+				}
+				saveToDisk(i, track)
+			} else if codec.MimeType == "video/VP8" {
+				fmt.Println("Got VP8 track, saving to disk as output.ivf")
+				i, ivfNewErr := ivfwriter.New("output.ivf")
+				if ivfNewErr != nil {
+					panic(ivfNewErr)
+				}
+				saveToDisk(i, track)
+			}
+		*/
+
+	})
+
 	r.sub.pc.OnDataChannel(func(dc *webrtc.DataChannel) {
 		log.Debugf("[S=>C] id=%v [r.sub.pc.OnDataChannel] got dc %v", r.uid, dc.Label())
 		if dc.Label() == API_CHANNEL {
