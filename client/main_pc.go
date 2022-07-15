@@ -46,6 +46,16 @@ func main() {
 
 	// parse flag
 	var session, addr string
+	//cmd := exec.Command("ffplay -i /home/wuyaxiong/webrtc/remote-control-client-go/client/rtp-forwarder.sdp -protocol_whitelist file,udp,rtp")
+	//cmd := exec.Command("ls")
+	//ffplay -i rtp-forwarder.sdp -protocol_whitelist file,udp,rtp
+	//cmd := exec.Command("ffplay", "-i", "rtp-forwarder.sdp", "-protocol_whitelist", "file,udp,rtp")
+	//cmd.Stdout = os.Stdout
+	//cmd.Stderr = os.Stderr
+	// e := cmd.Start()
+	// if e != nil {
+	// 	fmt.Println(e)
+	// }
 	//var rtpSenders []*webrtc.RTPSender
 
 	//meidaOpen := false
@@ -53,7 +63,6 @@ func main() {
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	flag.Parse()
-	subConnectioned := true
 
 	//log.SetFlags(log.Ldate | log.Lshortfile)
 
@@ -71,16 +80,19 @@ func main() {
 	}
 
 	rtc.OnPubIceConnectionStateChange = func(state webrtc.ICEConnectionState) {
+		log.Infof("Pub Connection state changed: %s", state)
 		if state == webrtc.ICEConnectionStateDisconnected {
 			// for _, rtpSend := range rtpSenders {
 			// 	rtc.GetPubTransport().GetPeerConnection().RemoveTrack(rtpSend)
 			// }
 			// rtc.UnPublish(rtpSenders)
 			log.Infof("rtc.GetPubTransport().GetPeerConnection().Close()")
-			subConnectioned = false
+
+			//cmd.Process.Kill()
+
 			rtc.ReStart()
 		}
-		log.Infof("Pub Connection state changed: %s", state)
+
 	}
 
 	log.Infof("rtc.GetSubTransport():%v,rtc.GetSubTransport().GetPeerConnection():%v", rtc.GetSubTransport(), rtc.GetSubTransport().GetPeerConnection())
@@ -223,10 +235,6 @@ func main() {
 			// 	return
 			// }
 			// Read
-			if !subConnectioned {
-				log.Infof("subConnectioned:%v", subConnectioned)
-				return
-			}
 
 			n, _, readErr := track.Read(b)
 			if readErr != nil {
@@ -322,8 +330,8 @@ func main() {
 				panic(err)
 			}
 		} else if state == webrtc.ICEConnectionStateDisconnected {
-			subConnectioned = false
-			log.Infof("subConnectioned: %v", subConnectioned)
+
+			log.Infof("sub ICEConnectionStateDisconnected")
 		}
 	}
 	select {}

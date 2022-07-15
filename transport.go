@@ -25,6 +25,9 @@ func NewTransport(role Target, rtc *RTC) *Transport {
 	if rtc.config == nil {
 		rtc.config = &DefaultConfig
 	}
+
+	t.SendCandidates = []*webrtc.ICECandidate{}
+
 	var err error
 	var api *webrtc.API
 	var me *webrtc.MediaEngine

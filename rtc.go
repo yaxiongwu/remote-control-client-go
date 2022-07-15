@@ -216,6 +216,7 @@ func (r *RTC) start(signaller Signaller) {
 	})
 }
 
+//能否不要重新建立Transport?一直用那两个sub和pub?
 func (r *RTC) ReStart() {
 
 	r.pub.pc.Close()
@@ -235,6 +236,32 @@ func (r *RTC) ReStart() {
 		if r.OnPubIceConnectionStateChange != nil {
 			r.OnPubIceConnectionStateChange(state)
 		}
+	})
+
+	r.sub.pc.OnTrack(func(track *webrtc.TrackRemote, receiver *webrtc.RTPReceiver) {
+		log.Infof("[S=>C] got track streamId=%v kind=%v ssrc=%v ", track.StreamID(), track.Kind(), track.SSRC())
+		if r.OnTrack != nil {
+			r.OnTrack(track, receiver)
+		}
+		/*
+			codec := track.Codec()
+			if codec.MimeType == "audio/opus" {
+				fmt.Println("Got Opus track, saving to disk as output.ogg,clockRate:%v,channels:%v", codec.ClockRate, codec.Channels)
+				i, oggNewErr := oggwriter.New("output.ogg", codec.ClockRate, codec.Channels)
+				if oggNewErr != nil {
+					panic(oggNewErr)
+				}
+				saveToDisk(i, track)
+			} else if codec.MimeType == "video/VP8" {
+				fmt.Println("Got VP8 track, saving to disk as output.ivf")
+				i, ivfNewErr := ivfwriter.New("output.ivf")
+				if ivfNewErr != nil {
+					panic(ivfNewErr)
+				}
+				saveToDisk(i, track)
+			}
+		*/
+
 	})
 
 	r.sub.pc.OnDataChannel(func(dc *webrtc.DataChannel) {
