@@ -1,11 +1,26 @@
+//go:build !js
+// +build !js
+
 package main
 
+/*
+#cgo pkg-config: opus
+#include <opus.h>
+
+int
+bridge_decoder_get_last_packet_duration(OpusDecoder *st, opus_int32 *samples)
+{
+	return opus_decoder_ctl(st, OPUS_GET_LAST_PACKET_DURATION(samples));
+}
+*/
+import "C"
 import (
 	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
 	"net"
+	"unsafe"
 
 	log "github.com/pion/ion-log"
 	"github.com/pion/rtp"
@@ -26,6 +41,7 @@ import (
 
 	//"github.com/pion/mediadevices/pkg/codec/mmal"
 	//"github.com/pion/mediadevices/pkg/codec/vpx"
+	"github.com/hajimehoshi/oto/v2"
 	_ "github.com/pion/mediadevices/pkg/driver/camera"     // This is required to register camera adapter
 	_ "github.com/pion/mediadevices/pkg/driver/microphone" // This is required to register microphone adapter
 	"github.com/pion/mediadevices/pkg/frame"
@@ -81,7 +97,7 @@ func main() {
 
 	rtc.OnPubIceConnectionStateChange = func(state webrtc.ICEConnectionState) {
 		log.Infof("Pub Connection state changed: %s", state)
-		if state == webrtc.ICEConnectionStateDisconnected {
+		if state == webrtc.ICEConnectionStateDisconnected || state == webrtc.ICEConnectionStateFailed {
 			// for _, rtpSend := range rtpSenders {
 			// 	rtc.GetPubTransport().GetPeerConnection().RemoveTrack(rtpSend)
 			// }
@@ -179,119 +195,66 @@ func main() {
 	for _, track1 := range s.GetTracks() {
 		log.Infof("Track (ID: %s) : %v\n", track1.ID())
 	}
-	// Create a local addr
-	var laddr *net.UDPAddr
-	if laddr, err = net.ResolveUDPAddr("udp", "127.0.0.1:"); err != nil {
-		panic(err)
-	}
-
-	// Prepare udp conns
-	// Also update incoming packets with expected PayloadType, the browser may use
-	// a different value. We have to modify so our stream matches what rtp-forwarder.sdp expects
-	udpConns := map[string]*udpConn{
-		"audio": {port: 4000, payloadType: 111},
-		"video": {port: 4002, payloadType: 96},
-	}
-
-	for _, c := range udpConns {
-		// Create remote addr
-		var raddr *net.UDPAddr
-		if raddr, err = net.ResolveUDPAddr("udp", fmt.Sprintf("127.0.0.1:%d", c.port)); err != nil {
-			panic(err)
-		}
-
-		// Dial udp
-		if c.conn, err = net.DialUDP("udp", laddr, raddr); err != nil {
-			panic(err)
-		}
-		defer func(conn net.PacketConn) {
-			if closeErr := conn.Close(); closeErr != nil {
-				panic(closeErr)
-			}
-		}(c.conn)
-	}
 
 	rtc.OnTrack = func(track *webrtc.TrackRemote, receiver *webrtc.RTPReceiver) {
-		log.Infof("[S=>C] got track streamId=%v kind=%v ssrc=%v ", track.StreamID(), track.Kind(), track.SSRC())
-		c, ok := udpConns[track.Kind().String()]
-		if !ok {
-			return
-		}
+		codec := track.Codec()
+		if codec.MimeType == "audio/opus" {
+			samplingRate := 48000
 
-		// Send a PLI on an interval so that the publisher is pushing a keyframe every rtcpPLIInterval
-		// go func() {
-		// 	ticker := time.NewTicker(time.Second * 2)
-		// 	for range ticker.C {
-		// 		if rtcpErr := peerConnection.WriteRTCP([]rtcp.Packet{&rtcp.PictureLossIndication{MediaSSRC: uint32(track.SSRC())}}); rtcpErr != nil {
-		// 			fmt.Println(rtcpErr)
-		// 		}
-		// 	}
-		// }()
+			// Number of channels (aka locations) to play sounds from. Either 1 or 2.
+			// 1 is mono sound, and 2 is stereo (most speakers are stereo).
+			numOfChannels := 1
 
-		b := make([]byte, 1500)
-		rtpPacket := &rtp.Packet{}
-		for {
-			// if rtc.GetSubTransport().GetPeerConnection().ICEConnectionState() != webrtc.ICEConnectionStateConnected {
-			// 	return
-			// }
-			// Read
+			// Bytes used by a channel to represent one sample. Either 1 or 2 (usually 2).
+			audioBitDepth := 2
 
-			n, _, readErr := track.Read(b)
-			if readErr != nil {
-				return
-				log.Errorf("readErr:%s", readErr)
-				panic(readErr)
+			otoCtx, readyChan, err := oto.NewContext(samplingRate, numOfChannels, audioBitDepth)
+			if err != nil {
+				panic("oto.NewContext failed: " + err.Error())
 			}
+			// It might take a bit for the hardware audio devices to be ready, so we wait on the channel.
+			<-readyChan
 
-			// Unmarshal the packet and update the PayloadType
-			if err = rtpPacket.Unmarshal(b[:n]); err != nil {
-				log.Errorf("err:%s", err)
-				panic(err)
+			decoder, err := NewOpusDecoder(samplingRate, numOfChannels)
+			if err != nil {
+				fmt.Printf("Error creating")
 			}
-			rtpPacket.PayloadType = c.payloadType
+			player := otoCtx.NewPlayer(decoder)
+			defer player.Close()
+			//player.Play()
+			//pipeReader, pipeWriter := io.Pipe()
 
-			// Marshal into original buffer with updated PayloadType
-			if n, err = rtpPacket.MarshalTo(b); err != nil {
-				log.Errorf("err:%s", err)
-				panic(err)
-			}
+			b := make([]byte, 1500)
+			rtpPacket := &rtp.Packet{}
+			for {
 
-			// Write
-
-			if _, writeErr := c.conn.Write(b[:n]); writeErr != nil {
-				// For this particular example, third party applications usually timeout after a short
-				// amount of time during which the user doesn't have enough time to provide the answer
-				// to the browser.
-				// That's why, for this particular example, the user first needs to provide the answer
-				// to the browser then open the third party application. Therefore we must not kill
-				// the forward on "connection refused" errors
-				var opError *net.OpError
-				if errors.As(writeErr, &opError) && opError.Err.Error() == "write: connection refused" {
-					continue
+				// Read
+				n, _, readErr := track.Read(b)
+				if readErr != nil {
+					log.Errorf("OnTrack read error: %v", readErr)
+					return
+					//panic(readErr)
 				}
-				//log.Errorf("err:%s", err)
-				panic(err)
+
+				// Unmarshal the packet and update the PayloadType
+				if err = rtpPacket.Unmarshal(b[:n]); err != nil {
+					log.Errorf("OnTrack UnMarshal error: %v", err)
+					return
+					//panic(err)
+				}
+
+				//复制一份，以防覆盖
+				temp := make([]byte, len(rtpPacket.Payload))
+				copy(temp, rtpPacket.Payload)
+				//decoder.SetOpusData(rtpPacket.Payload)
+				decoder.Write(temp)
+
+				player.Play()
+
 			}
-
 		}
-		// codec := track.Codec()
-		// if codec.MimeType == "audio/opus" {
-		// 	fmt.Println("Got Opus track, saving to disk as output.ogg,clockRate:%v,channels:%v", codec.ClockRate, codec.Channels)
-		// 	i, oggNewErr := oggwriter.New("output.ogg", codec.ClockRate, codec.Channels)
-		// 	if oggNewErr != nil {
-		// 		panic(oggNewErr)
-		// 	}
-		// 	saveToDisk(i, track)
-		// } else if codec.MimeType == "video/VP8" {
-		// 	fmt.Println("Got VP8 track, saving to disk as output.ivf")
-		// 	i, ivfNewErr := ivfwriter.New("output.ivf")
-		// 	if ivfNewErr != nil {
-		// 		panic(ivfNewErr)
-		// 	}
-		// 	saveToDisk(i, track)
-		// }
-
 	}
+
 	rtc.OnSubIceConnectionStateChange = func(state webrtc.ICEConnectionState) {
 		log.Infof("Sub Connection state changed: %s", state)
 		// if state == webrtc.ICEConnectionStateDisconnected {
@@ -335,4 +298,88 @@ func main() {
 		}
 	}
 	select {}
+}
+
+var errDecUninitialized = fmt.Errorf("opus decoder uninitialized")
+
+type Decoder struct {
+	p *C.struct_OpusDecoder
+	// Same purpose as encoder struct
+	mem         []byte
+	sample_rate int
+	channels    int
+	opus_data   []byte
+}
+
+// NewDecoder allocates a new Opus decoder and initializes it with the
+// appropriate parameters. All related memory is managed by the Go GC.
+func NewOpusDecoder(sample_rate int, channels int) (*Decoder, error) {
+	var dec Decoder
+	err := dec.Init(sample_rate, channels)
+	if err != nil {
+		return nil, err
+	}
+	return &dec, nil
+}
+
+func (dec *Decoder) Init(sample_rate int, channels int) error {
+	if dec.p != nil {
+		return fmt.Errorf("opus decoder already initialized")
+	}
+	if channels != 1 && channels != 2 {
+		return fmt.Errorf("Number of channels must be 1 or 2: %d", channels)
+	}
+	size := C.opus_decoder_get_size(C.int(channels))
+	dec.sample_rate = sample_rate
+	dec.channels = channels
+	dec.mem = make([]byte, size)
+	fmt.Println("decode init size:", size)
+	dec.p = (*C.OpusDecoder)(unsafe.Pointer(&dec.mem[0]))
+	errno := C.opus_decoder_init(
+		dec.p,
+		C.opus_int32(sample_rate),
+		C.int(channels))
+	if errno != 0 {
+		return errors.New("errno")
+	}
+	return nil
+}
+func (dec *Decoder) SetOpusData(data []byte) error {
+	dec.opus_data = data // *(*[]byte)(unsafe.Pointer(&data))
+	return nil
+}
+
+//这里做一个fifo，wirte在on.track中调用，read在play中调用
+func (dec *Decoder) Read(pcm []byte) (int, error) {
+	if dec.p == nil {
+		return 0, errDecUninitialized
+	}
+	//fmt.Println("2:", len(dec.opus_data)) //, &dec.opus_data)
+	if len(dec.opus_data) == 0 {
+		return 0, fmt.Errorf("opus: no data supplied")
+	}
+	if len(pcm) == 0 {
+		return 0, fmt.Errorf("opus: target buffer empty")
+	}
+	if cap(pcm)%dec.channels != 0 {
+		return 0, fmt.Errorf("opus: target buffer capacity must be multiple of channels")
+	}
+	n := int(C.opus_decode(
+		dec.p,
+		(*C.uchar)(&dec.opus_data[0]),
+		C.opus_int32(len(dec.opus_data)),
+		(*C.opus_int16)((*int16)(unsafe.Pointer(&pcm[0]))),
+		C.int((cap(pcm)/dec.channels)/2),
+		0))
+	if n < 0 {
+		return 0, errors.New("n<0")
+	}
+	return n * 2, nil
+}
+
+func (dec *Decoder) Write(pcm []byte) (int, error) {
+	dec.opus_data = pcm
+	length := len(dec.opus_data)
+	//fmt.Printf("lenght:%d\n", length)
+	return length, nil
 }

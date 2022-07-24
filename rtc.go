@@ -224,6 +224,8 @@ func (r *RTC) ReStart() {
 	if !r.Connected() {
 		r.Connect()
 	}
+	r.pub = nil
+	r.sub = nil
 	r.pub = NewTransport(Target_PUBLISHER, r)
 	r.sub = NewTransport(Target_SUBSCRIBER, r)
 
