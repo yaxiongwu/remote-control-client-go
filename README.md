@@ -77,7 +77,6 @@ For more examples, see the `_test.go` files.
 This package requires libopus and libopusfile development packages to be
 installed on your system. These are available on Debian based systems from
 aptitude as `libopus-dev` and `libopusfile-dev`, and on Mac OS X from homebrew.
-
 They are linked into the app using pkg-config.
 
 Debian, Ubuntu, ...:
@@ -89,6 +88,9 @@ Mac:
 ```sh
 brew install pkg-config opus opusfile
 ```
+
+
+
 
 ### Building Without `libopusfile`
 
