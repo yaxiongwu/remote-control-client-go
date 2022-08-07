@@ -62,16 +62,16 @@ func main() {
 	//flag.StringVar(&addr, "addr", "192.168.1.199:5551", "ion-sfu grpc addr")
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
-	//audioSrc := flag.String("audio-src", "audiotestsrc", "GStreamer audio src")
-	//videoSrc := "-video-src 'autovideosrc ! video/x-raw, width=320, height=240 ! videoconvert ! queue'"
-	videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
+	audioSrc := " autoaudiosrc ! audio/x-raw"
+	videoSrc := " autovideosrc ! video/x-raw, width=320, height=240 ! videoconvert ! queue"
+	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
 
 	// Create a audio track
-	// audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
-	// if err != nil {
-	// 	panic(err)
-	// }
+	audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
+	if err != nil {
+		panic(err)
+	}
 
 	// Create a video track
 	videoTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "video/vp8"}, "video", "pion2")
@@ -184,8 +184,9 @@ func main() {
 		if state == webrtc.ICEConnectionStateConnected {
 			//var tracks = [...]webrtc.TrackLocal{}
 
-			_, err = rtc.Publish(videoTrack)
-			gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, *videoSrc).Start()
+			_, err = rtc.Publish(videoTrack, audioTrack)
+			gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
+			gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc).Start()
 			if err != nil {
 				log.Errorf("join err=%v", err)
 				panic(err)
@@ -195,8 +196,6 @@ func main() {
 			log.Infof("sub ICEConnectionStateDisconnected")
 		}
 	}
-
-	//gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, *audioSrc).Start()
 
 	select {}
 }
