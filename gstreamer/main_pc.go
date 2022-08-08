@@ -63,7 +63,7 @@ func main() {
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	audioSrc := " autoaudiosrc ! audio/x-raw"
-	videoSrc := " autovideosrc ! video/x-raw, width=320, height=240 ! videoconvert ! queue"
+	videoSrc := " autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! queue"
 	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
 
@@ -74,7 +74,8 @@ func main() {
 	}
 
 	// Create a video track
-	videoTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "video/vp8"}, "video", "pion2")
+	//videoTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "video/vp8"}, "video", "pion2")
+	videoTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "video/H264"}, "video", "pion2")
 	if err != nil {
 		panic(err)
 	}
@@ -185,7 +186,8 @@ func main() {
 			//var tracks = [...]webrtc.TrackLocal{}
 
 			_, err = rtc.Publish(videoTrack, audioTrack)
-			gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
+			//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
+			gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
 			gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc).Start()
 			if err != nil {
 				log.Errorf("join err=%v", err)

@@ -54,3 +54,7 @@ These pipelines work on Linux, they may have issues on other platforms. We would
 * a pre-recorded video, sintel.mkv is available [here](https://durian.blender.org/download/)
 
   `echo $BROWSER_SDP | gstreamer-send -video-src "uridecodebin uri=file:///tmp/sintel.mkv ! videoscale ! video/x-raw, width=320, height=240 ! queue " -audio-src "uridecodebin uri=file:///tmp/sintel.mkv ! queue ! audioconvert"`
+
+gst-launch-1.0 -v v4l2src device=/dev/video0 ! 'video/x-raw,width=1280,height=720,framerate=10/1' ! videoconvert ! omxh264enc ! 'video/x-h264, profile=(string)high' ! rtph264pay ! udpsink host=192.168.8.100 port=5600
+gst-launch-1.0 -v v4l2src device=/dev/video0 ! 'video/x-raw,width=1280,height=720,framerate=10/1' ! videoconvert ! omxh264enc ! 'video/x-h264, profile=(string)high' ! rtph264pay ! "application/x-rtp,payload=(int)103,clock-rate=(int)90000" ! udpsink host=192.168.8.100 port=9004
+gst-launch-1.0 -v v4l2src device=/dev/video0 ! 'video/x-raw,width=1280,height=720,framerate=10/1' ! videoconvert ! x264enc ! 'video/x-h264, profile=(string)high' ! rtph264pay ! "application/x-rtp,payload=(int)103,clock-rate=(int)90000" ! rtmpsink location=rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1
