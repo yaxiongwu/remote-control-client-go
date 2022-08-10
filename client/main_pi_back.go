@@ -39,12 +39,11 @@ import (
 
 	"github.com/hajimehoshi/oto/v2"
 	"github.com/pion/mediadevices/pkg/codec/mmal"
-	//"github.com/pion/mediadevices/pkg/codec/opus"
+	"github.com/pion/mediadevices/pkg/codec/opus"
 	_ "github.com/pion/mediadevices/pkg/driver/camera"     // This is required to register camera adapter
 	_ "github.com/pion/mediadevices/pkg/driver/microphone" // This is required to register microphone adapter
 	"github.com/pion/mediadevices/pkg/frame"
 	"github.com/pion/mediadevices/pkg/prop"
-	gst "github.com/YaxiongWu/remote-control-client-go/pkg/gstreamer-src"
 )
 
 var (
@@ -60,17 +59,6 @@ func main() {
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	flag.Parse()
-	
-	audioSrc := " autoaudiosrc ! audio/x-raw"
-	
-	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
-	flag.Parse()
-
-	// Create a audio track
-	audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
-	if err != nil {
-		panic(err)
-	}
 
 	//log.SetFlags(log.Ldate | log.Lshortfile)
 
@@ -139,15 +127,15 @@ func main() {
 		panic(err)
 	}
 	mmalParams.BitRate = 1_500_000 // 500kbps
-	//opusParams, err := opus.NewParams()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println(opusParams)
+	opusParams, err := opus.NewParams()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(opusParams)
 
 	codecSelector := mediadevices.NewCodecSelector(
 		mediadevices.WithVideoEncoders(&mmalParams),
-		//mediadevices.WithAudioEncoders(&opusParams),
+		mediadevices.WithAudioEncoders(&opusParams),
 	)
 
 	/*
@@ -178,7 +166,7 @@ func main() {
 			c.Width = prop.Int(800)
 			c.Height = prop.Int(600)
 		},
-		//Audio: func(c *mediadevices.MediaTrackConstraints) {},
+		Audio: func(c *mediadevices.MediaTrackConstraints) {},
 		Codec: codecSelector,
 	})
 
@@ -266,7 +254,7 @@ func main() {
 				//break // only publish first track, thanks
 				//}
 			}
-              tracks = append(tracks, audioTrack)
+
 			_, err = rtc.Publish(tracks...)
 			if err != nil {
 				panic(err)
@@ -279,7 +267,6 @@ func main() {
 				log.Errorf("join err=%v", err)
 				panic(err)
 			}
-			gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc).Start()
 		} else if state == webrtc.ICEConnectionStateDisconnected {
 
 			log.Infof("sub ICEConnectionStateDisconnected")
