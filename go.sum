@@ -1,10 +1,6 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/yaxiongwu/remote-control-server v0.0.0-20220608094526-b63498b97f37 h1:OXAMbHxa8FuV08vu/pzrVU46dPCcIX8u8WCFuwtwg6w=
-github.com/yaxiongwu/remote-control-server v0.0.0-20220608094526-b63498b97f37/go.mod h1:CuqG0esqFm3c1bDm7DcYu7dH46f0AtDY3R50mZa0Vdk=
-github.com/yaxiongwu/remote-control-server v0.0.0-20220622052007-8b9669af5432 h1:MbAWKFCalI45MtpYFSXZCtgbCkFgUFachTAXb8/bqEM=
-github.com/yaxiongwu/remote-control-server v0.0.0-20220622052007-8b9669af5432/go.mod h1:CuqG0esqFm3c1bDm7DcYu7dH46f0AtDY3R50mZa0Vdk=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/blackjack/webcam v0.0.0-20220329180758-ba064708e165 h1:QsIbRyO2tn5eSJZ/skuDqSTo0GWI5H4G1AT7Mm2H0Nw=
 github.com/blackjack/webcam v0.0.0-20220329180758-ba064708e165/go.mod h1:G0X+rEqYPWSq0dG8OMf8M446MtKytzpPjgS3HbdOJZ4=
@@ -162,6 +158,8 @@ github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/yaxiongwu/remote-control-server v0.0.0-20220810010705-c4191131a4ec h1:Fyq1Hfw/nu1iixjTBE7Ez0ISQOLONNHBqUwIbQxx/wY=
+github.com/yaxiongwu/remote-control-server v0.0.0-20220810010705-c4191131a4ec/go.mod h1:j0md2ayZQRV7blYCyUwB8aQnPC/dDN5wDAwuJNiN3A8=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 go.opentelemetry.io/proto/otlp v0.7.0/go.mod h1:PqfVotwruBrMGOCsRd/89rSnXhoiJIqeYNgFYFoEGnI=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
