@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/YaxiongWu/remote-control-client-go/pkg/proto/rtc";
+option go_package = "github.com/yaxiongwu/remote-control-client-go/pkg/proto/rtc";
 
 package rtc;
 

@@ -24,7 +24,7 @@ import (
 	log "github.com/pion/ion-log"
 	"github.com/pion/rtp"
 
-	sdk "github.com/YaxiongWu/remote-control-client-go"
+	sdk "github.com/yaxiongwu/remote-control-client-go"
 	//ilog "github.com/pion/ion-log"
 	"github.com/pion/mediadevices"
 	"github.com/pion/webrtc/v3"
@@ -44,7 +44,7 @@ import (
 	_ "github.com/pion/mediadevices/pkg/driver/microphone" // This is required to register microphone adapter
 	"github.com/pion/mediadevices/pkg/frame"
 	"github.com/pion/mediadevices/pkg/prop"
-	gst "github.com/YaxiongWu/remote-control-client-go/pkg/gstreamer-src"
+	gst "github.com/yaxiongwu/remote-control-client-go/pkg/gstreamer-src"
 )
 
 var (

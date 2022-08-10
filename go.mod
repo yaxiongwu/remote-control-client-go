@@ -1,9 +1,9 @@
-module github.com/YaxiongWu/remote-control-client-go
+module github.com/yaxiongwu/remote-control-client-go
 
 go 1.17
 
 require (
-	github.com/YaxiongWu/remote-control-server v0.0.0-20220622052007-8b9669af5432 // indirect
+	github.com/yaxiongwu/remote-control-server v0.0.0-20220622052007-8b9669af5432 // indirect
 	github.com/blackjack/webcam v0.0.0-20220329180758-ba064708e165 // indirect
 	github.com/ebml-go/ebml v0.0.0-20160925193348-ca8851a10894 // indirect
 	github.com/ebml-go/webm v0.0.0-20160924163542-629e38feef2a // indirect

@@ -25,7 +25,7 @@ import (
 	log "github.com/pion/ion-log"
 	"github.com/pion/rtp"
 
-	sdk "github.com/YaxiongWu/remote-control-client-go"
+	sdk "github.com/yaxiongwu/remote-control-client-go"
 	//ilog "github.com/pion/ion-log"
 
 	"github.com/pion/webrtc/v3"
@@ -40,7 +40,7 @@ import (
 
 	//"github.com/pion/mediadevices/pkg/codec/mmal"
 	//"github.com/pion/mediadevices/pkg/codec/vpx"
-	gst "github.com/YaxiongWu/remote-control-client-go/pkg/gstreamer-src"
+	gst "github.com/yaxiongwu/remote-control-client-go/pkg/gstreamer-src"
 	"github.com/hajimehoshi/oto/v2"
 	_ "github.com/pion/mediadevices/pkg/driver/camera"     // This is required to register camera adapter
 	_ "github.com/pion/mediadevices/pkg/driver/microphone" // This is required to register microphone adapter

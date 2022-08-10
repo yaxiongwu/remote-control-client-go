@@ -24,7 +24,7 @@ import (
 	log "github.com/pion/ion-log"
 	"github.com/pion/rtp"
 
-	sdk "github.com/YaxiongWu/remote-control-client-go"
+	sdk "github.com/yaxiongwu/remote-control-client-go"
 	//ilog "github.com/pion/ion-log"
 	"github.com/pion/mediadevices"
 	"github.com/pion/webrtc/v3"

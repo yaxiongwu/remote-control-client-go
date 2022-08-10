@@ -37,7 +37,7 @@
    sudo amixer cset numid=3 1
    
 七、下载程序
-   git clone https://github.com/YaxiongWu/remote-control-client-go
+   git clone https://github.com/yaxiongwu/remote-control-client-go
    运行client下的程序
    
 八、opus lib bug问题 

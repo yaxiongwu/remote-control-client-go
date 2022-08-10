@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/YaxiongWu/remote-control-server/pkg/proto/rtc"
+	"github.com/yaxiongwu/remote-control-server/pkg/proto/rtc"
 	log "github.com/pion/ion-log"
 	"github.com/pion/webrtc/v3"
 	"github.com/pion/webrtc/v3/pkg/media"
