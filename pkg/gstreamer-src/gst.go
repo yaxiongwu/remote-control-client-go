@@ -57,8 +57,8 @@ func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, p
 	case "h264":
 		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! omxh264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
-		//pipelineStr = pipelineSrc + " ! omxh264enc ! h264parse ! " + pipelineStr
-		pipelineStr = "autovideosrc ! video/x-raw, width=800,height=720 ! queue ! videoconvert ! omxh264enc target-bitrate=4000000 control-rate=variable ! h264parse ! appsink name=appsink"
+		pipelineStr = pipelineSrc + " ! videoconvert ! omxh264enc target-bitrate=4000000 control-rate=variable ! h264parse !" + pipelineStr
+		//pipelineStr = "autovideosrc ! video/x-raw, width=800,height=720 ! queue ! videoconvert ! omxh264enc target-bitrate=4000000 control-rate=variable ! h264parse ! appsink name=appsink"
 		//gst-launch-1.0 -v v4l2src device=/dev/video0 ! 'video/x-raw, width=1024, height=768, framerate=30/1' ! queue ! videoconvert ! omxh264enc target-bitrate=4000000 control-rate=variable ! h264parse ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'
 		clockRate = videoClockRate
 

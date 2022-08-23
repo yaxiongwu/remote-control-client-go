@@ -63,7 +63,8 @@ func main() {
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	audioSrc := " autoaudiosrc ! audio/x-raw"
-	videoSrc := " autovideosrc ! video/x-raw, width=1024,height=768 ! videoconvert ! queue"
+	//omxh264enc可能需要设置长宽为16倍整数，否则会出现"green band"，一道偏色栏
+	videoSrc := " autovideosrc ! video/x-raw, width=880,height=720 ! videoconvert ! queue"
 	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
 
