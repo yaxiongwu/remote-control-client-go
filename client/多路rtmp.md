@@ -64,6 +64,19 @@ ffmpeg -re -f lavfi -i testsrc=size=640x480:rate=30 -vcodec libx264 -cpu-used 5 
 
 ffmpeg -re -f lavfi -i testsrc=size=640x480:rate=30 -vcodec libx264 -cpu-used 5 -deadline 1 -g 10 -error-resilient 1 -auto-alt-ref 1 -map 0 -f flv "rtp://127.0.0.1:5004?pkt_size=1200"
 
+gst-launch-1.0 -v v4l2src device=/dev/video0 ! 'video/x-raw, width=1024, height=768, framerate=30/1' ! queue ! videoconvert ! omxh264enc ! h264parse ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'
+gst-launch-1.0 -v v4l2src device=/dev/video0 ! 'video/x-raw, width=1024, height=768, framerate=30/1' ! queue ! videoconvert ! omxh264enc quant-i-frames=10 ! h264parse ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'
+
+maxperf-enable=1 打开最大性能模式
+iframeinterval=100 设置i帧间隔
+control-rate=0 bitrate=30000000 设置变码率和标准比特率（1定码率）
+ratecontrol-enable=0 quant-i-frames=30 quant-p-frames=30 quant-b-frames=30 num-B-Frames=1 i b p 帧间隔
+preset-level=4 MeasureEncoderLatency=1 设置编码压缩级别（见附录1）
+profile=0 视频质量（见附录2）
+low-latency
+
+profile=2 preset-level=2 MeasureEncoderLatency=1 control-rate=0 bitrate=10000000 iframeinterval=50
+
 
 摄像头：ffmpeg -f dshow -i video="USB webcam" -vcodec libx264 -acodec aac -ar 44100 -ac 1 -r 25 -s 1920*1080 -f flv rtmp://192.168.1.3/live/desktop
 ffmpeg -f dshow -i video="USB webcam" -vcodec libx264 -acodec aac -ar 44100 -ac 1 -r 25 -s 1920*1080 -f flv rtmp://192.168.1.3/live/desktop

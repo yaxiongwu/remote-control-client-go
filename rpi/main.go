@@ -63,7 +63,7 @@ func main() {
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	audioSrc := " autoaudiosrc ! audio/x-raw"
-	videoSrc := " autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! queue"
+	videoSrc := " autovideosrc ! video/x-raw, width=1024,height=768 ! videoconvert ! queue"
 	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
 
