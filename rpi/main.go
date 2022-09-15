@@ -40,10 +40,10 @@ import (
 
 	//"github.com/pion/mediadevices/pkg/codec/mmal"
 	//"github.com/pion/mediadevices/pkg/codec/vpx"
-	gst "github.com/yaxiongwu/remote-control-client-go/pkg/gstreamer-src"
 	"github.com/hajimehoshi/oto/v2"
 	_ "github.com/pion/mediadevices/pkg/driver/camera"     // This is required to register camera adapter
 	_ "github.com/pion/mediadevices/pkg/driver/microphone" // This is required to register microphone adapter
+	gst "github.com/yaxiongwu/remote-control-client-go/pkg/gstreamer-src"
 )
 
 type udpConn struct {
@@ -62,17 +62,17 @@ func main() {
 	//flag.StringVar(&addr, "addr", "192.168.1.199:5551", "ion-sfu grpc addr")
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
-	audioSrc := " autoaudiosrc ! audio/x-raw"
+	//audioSrc := " autoaudiosrc ! audio/x-raw"
 	//omxh264enc可能需要设置长宽为16倍整数，否则会出现"green band"，一道偏色栏
 	videoSrc := " autovideosrc ! video/x-raw, width=880,height=720 ! videoconvert ! queue"
 	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
 
 	// Create a audio track
-	audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
-	if err != nil {
-		panic(err)
-	}
+	// audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	// Create a video track
 	//videoTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "video/vp8"}, "video", "pion2")
@@ -186,10 +186,10 @@ func main() {
 		if state == webrtc.ICEConnectionStateConnected {
 			//var tracks = [...]webrtc.TrackLocal{}
 
-			_, err = rtc.Publish(videoTrack, audioTrack)
+			_, err = rtc.Publish(videoTrack) //, audioTrack)
 			//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
 			gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-			gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc).Start()
+			//gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc).Start()
 			if err != nil {
 				log.Errorf("join err=%v", err)
 				panic(err)
