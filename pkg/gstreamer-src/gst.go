@@ -65,8 +65,8 @@ func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, p
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! tee name =t ! queue ! appsink name=appsink t. ! queue ! flvmux ! filesink location=test.flv "
 		//pipelineStr = "autovideosrc ! video/x-raw,width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! tee name=t ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! queue ! appsink name=appsink t. ! queue ! x264enc ! flvmux !  rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'"
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! tee name =t ! queue ! appsink name=appsink"
-		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! " + pipelineStr
-		pipelineStr = pipelineSrc + " ! video/x-raw,format=I420,framerate=40/1 ! omxh264enc control-rate=2 target-bitrate=10485760 interval-intraframes=14 periodicty-idr=2 ! " + pipelineStr
+		pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! " + pipelineStr
+		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420,framerate=40/1 ! omxh264enc control-rate=2 target-bitrate=10485760 interval-intraframes=14 periodicty-idr=2 ! " + pipelineStr
 		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! omxh264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		clockRate = videoClockRate
@@ -132,7 +132,7 @@ func goHandlePipelineBuffer(buffer unsafe.Pointer, bufferLen C.int, duration C.i
 	pipelinesLock.Lock()
 	pipeline, ok := pipelines[int(pipelineID)]
 	pipelinesLock.Unlock()
-	//fmt.Printf("goHandlePipelineBuffer %d ", bufferLen)
+	//fmt.Printf("goHandlePipelineBuffer %d ", pipelineID)
 	//buff := make([]byte, 1000)
 
 	if ok {
@@ -140,9 +140,12 @@ func goHandlePipelineBuffer(buffer unsafe.Pointer, bufferLen C.int, duration C.i
 			if err := t.WriteSample(media.Sample{Data: C.GoBytes(buffer, bufferLen), Duration: time.Duration(duration)}); err != nil {
 				panic(err)
 			}
-			_, err1 := conn.Write(C.GoBytes(buffer, bufferLen)[0:bufferLen])
-			if err1 != nil {
-				panic(err1)
+			// 这里要求createPiple的时候，把视频放在前面
+			if pipelineID == 0 {
+				_, err1 := conn.Write(C.GoBytes(buffer, bufferLen)[0:bufferLen])
+				if err1 != nil {
+					panic(err1)
+				}
 			}
 		}
 	} else {
