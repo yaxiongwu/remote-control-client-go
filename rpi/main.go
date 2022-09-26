@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"net"
+	"net"	
 
 	log "github.com/pion/ion-log"
 	"github.com/pion/rtp"
@@ -32,6 +32,7 @@ import (
 	_ "github.com/pion/mediadevices/pkg/driver/microphone" // This is required to register microphone adapter
 	gst "github.com/yaxiongwu/remote-control-client-go/pkg/gstreamer-src"
 	opusdecoder "github.com/yaxiongwu/remote-control-client-go/pkg/opus/decoder"
+	"github.com/yaxiongwu/remote-control-client-go/pkg/rtmpudp"
 )
 
 type udpConn struct {
@@ -51,7 +52,7 @@ func main() {
 	flag.StringVar(&addr, "addr", "120.78.200.246:5551", "ion-sfu grpc addr")
 	flag.StringVar(&session, "session", "ion", "join session name")
 	audioSrc := " autoaudiosrc ! audio/x-raw"
-	//omxh264enc可能需要设置长宽为16倍整数，否则会出现"green band"，一道偏色栏
+	//omxh264enc可能需要设置长宽为32倍整数，否则会出现"green band"，一道偏色栏
 	videoSrc := " autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! queue"
 	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
@@ -66,11 +67,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
+ 
+ 
+     rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc).Start()
-
+	gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc,rtmpudp.GetConn()).Start()
+	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc,rtmpudp.GetConn()).Start()
+	
+	
 	connector := sdk.NewConnector(addr)
 	rtc, err := sdk.NewRTC(connector)
 	if err != nil {
