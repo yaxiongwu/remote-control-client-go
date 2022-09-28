@@ -66,15 +66,19 @@ func main() {
 	audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
 	if err != nil {
 		panic(err)
-	}
+	} 
  
- 
-     rtmpudp := rtmpudp.Init("5000")
+    rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
 	gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc,rtmpudp.GetConn()).Start()
 	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc,rtmpudp.GetConn()).Start()
 	
-	
+	//在树莓派上控制时开启
+
+	speed := make(chan int)
+	pi := sdk.Init(26, 19, 13, 6)
+	pi.SpeedControl(speed)
+
 	connector := sdk.NewConnector(addr)
 	rtc, err := sdk.NewRTC(connector)
 	if err != nil {
@@ -102,12 +106,26 @@ func main() {
 		})
 
 		dc.OnMessage(func(msg webrtc.DataChannelMessage) {
-			log.Infof("get msg from:%v,msg:%s", dc.Label(), msg.Data)
+			//log.Infof("get msg from:%v,msg:%s", dc.Label(), msg.Data)
 			err := json.Unmarshal(msg.Data, &recvData)
 			if err != nil {
 				log.Errorf("Unmarshal:err %v", err)
 				return
 			}
+			/*使用树莓派时开启*/
+
+			//if recvData["type"] != nil {
+			switch recvData["type"] {
+			case 1: //方向
+				//每次方向摇杆放开就会回到(0,0)，如果y=0，固定为往前走，这样会导致永远不会往后走
+				pi.DirectionControl(recvData["x"], recvData["y"])
+			case 2: //速度
+				//if(recvData["speed"]!=nil){
+				speed <- recvData["speed"]
+				//}
+			} //switch
+			//} //if
+			//log.Infof("recvData:%v,%v", recvData["t"], recvData["x"])
 		})
 	}
 

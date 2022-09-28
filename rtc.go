@@ -796,7 +796,7 @@ func (r *RTC) onSingalHandle() error {
 		case *rtc.Reply_Trickle:
 			var candidate webrtc.ICECandidateInit
 			_ = json.Unmarshal([]byte(payload.Trickle.Init), &candidate)
-			log.Infof("[%v] [trickle] type=%v candidate=%v", r.uid, payload.Trickle.Target, candidate)
+			//log.Infof("[%v] [trickle] type=%v candidate=%v", r.uid, payload.Trickle.Target, candidate)
 			r.trickle(candidate, Target(payload.Trickle.Target))
 		case *rtc.Reply_TrackEvent:
 			if r.OnTrackEvent == nil {

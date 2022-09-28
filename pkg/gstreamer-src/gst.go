@@ -141,7 +141,7 @@ func goHandlePipelineBuffer(buffer unsafe.Pointer, bufferLen C.int, duration C.i
 				if err1 != nil {
 					panic(err1)
 				}
-			}(pipeline.conn,buffer,bufferLen)
+			}(pipeline.conn,buffer,bufferLen)			
 		  }//if pipeline.codecName == "h264" {
 		}//for
 	} else {
