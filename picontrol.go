@@ -56,7 +56,7 @@ func (pi *PiControl) DirectionControl(newDirectionX int,newDirectionY int) error
 	     pi.directionX=newDirectionX
 	     pi.directionY=newDirectionY
 	     
-		 fmt.Println(" pi.directionX:", pi.directionX)
+		 //fmt.Println(" pi.directionX:", pi.directionX)
 		 if(pi.directionX >0){//往左		
 			  pinDirectionIN1.High()
 		      pinDirectionIN2.Low()			
