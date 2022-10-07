@@ -14,7 +14,7 @@ import (
 	"time"
 	"unsafe"	
 	"net"
-
+	
 	"github.com/pion/webrtc/v3"
 	"github.com/pion/webrtc/v3/pkg/media"
 )
@@ -136,7 +136,13 @@ func goHandlePipelineBuffer(buffer unsafe.Pointer, bufferLen C.int, duration C.i
 			}
 						
 			if pipeline.codecName == "h264" {
-			go func(conn *net.UDPConn,buffer unsafe.Pointer, bufferLen C.int){	
+			go func(conn *net.UDPConn,buffer unsafe.Pointer, bufferLen C.int){
+				/*defer func(){				
+					if err := recover(); err!=nil{
+						fmt.Println("conn recover err:",err)
+						}
+					}()
+					* */
 				_, err1 := conn.Write(C.GoBytes(buffer, bufferLen)[0:bufferLen])
 				if err1 != nil {
 					panic(err1)

@@ -15,7 +15,7 @@ type RtmpUdp struct {
 }
 
 func Init(port string) *RtmpUdp{
-    cmd :=exec.Command("bash","-c","gst-launch-1.0 udpsrc port="+port+" ! queue ! h264parse ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'")
+    cmd :=exec.Command("bash","-c","gst-launch-1.0 udpsrc buffer-size=1000000 port="+port+" ! queue ! h264parse ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'")
 	err :=cmd.Start()	
 	if err !=nil{
 		fmt.Printf("gst-launch udp error:%s\n",err)
