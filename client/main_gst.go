@@ -52,8 +52,7 @@ func main() {
 	flag.StringVar(&session, "session", "ion", "join session name")
 	audioSrc := " autoaudiosrc ! audio/x-raw"
 	//omxh264enc可能需要设置长宽为32倍整数，否则会出现"green band"，一道偏色栏
-	//videoSrc := " autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! queue"
-	videoSrc := " autovideosrc ! video/x-raw, width=600, height=400 ! videoconvert ! queue"
+	videoSrc := " autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! queue"
 	//videoSrc := flag.String("video-src", "videotestsrc", "GStreamer video src")
 	flag.Parse()
 	// Create a video track
@@ -70,7 +69,7 @@ func main() {
 
 	rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
+	gst.CreatePipeline("h264-x264enc", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
 	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc, rtmpudp.GetConn()).Start()
 
 	connector := sdk.NewConnector(addr)

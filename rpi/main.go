@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"net"	
+	"net"
 
 	log "github.com/pion/ion-log"
 	"github.com/pion/rtp"
@@ -66,13 +66,13 @@ func main() {
 	audioTrack, err := webrtc.NewTrackLocalStaticSample(webrtc.RTPCodecCapability{MimeType: "audio/opus"}, "audio", "pion1")
 	if err != nil {
 		panic(err)
-	} 
- 
-    rtmpudp := rtmpudp.Init("5000")
+	}
+
+	rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("h264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc,rtmpudp.GetConn()).Start()
-	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc,rtmpudp.GetConn()).Start()
-	
+	gst.CreatePipeline("h264-omxh264enc", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
+	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc, rtmpudp.GetConn()).Start()
+
 	//在树莓派上控制时开启
 
 	speed := make(chan int)
