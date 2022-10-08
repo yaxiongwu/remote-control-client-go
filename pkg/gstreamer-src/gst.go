@@ -59,7 +59,7 @@ func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, p
 		pipelineStr = pipelineSrc + " ! vp9enc ! " + pipelineStr
 		clockRate = videoClockRate
 
-	case "h264-omxh264enc":
+	case "h264_omx":
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=10 ! tee name =t ! queue ! appsink name=appsink t. ! queue ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'"
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc key-int-max=20 ! tee name =t  ! queue ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'  t. ! queue ! video/x-h264,stream-format=byte-stream ! appsink name=appsink"
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! tee name =t ! queue ! appsink name=appsink t. ! queue ! flvmux ! filesink location=test.flv "
@@ -70,19 +70,20 @@ func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, p
 		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! omxh264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		pipelineStr = pipelineSrc + " ! video/x-raw,format=I420,framerate=40/1 ! omxh264enc entropy-mode=1 b-frames=0 interval-intraframes=2 control-rate=1 target-bitrate=8000000 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
+		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420,framerate=40/1 ! omxh264enc entropy-mode=1 b-frames=0 interval-intraframes=2 control-rate=1 target-bitrate=8000000 ! " + pipelineStr
 		clockRate = videoClockRate
+		codecName = "h264"
 
-	case "h264-x264enc":
+	case "h264_x264":
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=10 ! tee name =t ! queue ! appsink name=appsink t. ! queue ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'"
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc key-int-max=20 ! tee name =t  ! queue ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'  t. ! queue ! video/x-h264,stream-format=byte-stream ! appsink name=appsink"
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! tee name =t ! queue ! appsink name=appsink t. ! queue ! flvmux ! filesink location=test.flv "
 		//pipelineStr = "autovideosrc ! video/x-raw,width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! tee name=t ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! queue ! appsink name=appsink t. ! queue ! x264enc ! flvmux !  rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'"
 		//pipelineStr = "autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! tee name =t ! queue ! appsink name=appsink"
-		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420,framerate=40/1 ! omxh264enc control-rate=2 target-bitrate=10485760 interval-intraframes=14 periodicty-idr=2 ! " + pipelineStr
-		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! " + pipelineStr
-
+		//pipelineStr = pipelineSrc + " ! video/x-raw,format=I420 ! x264enc speed-preset=ultrafast tune=zerolatency key-int-max=20 ! video/x-h264,stream-format=byte-stream ! " + pipelineStr
 		clockRate = videoClockRate
+		codecName = "h264"
 
 	case "opus":
 		pipelineStr = pipelineSrc + " ! opusenc ! " + pipelineStr
@@ -148,7 +149,6 @@ func goHandlePipelineBuffer(buffer unsafe.Pointer, bufferLen C.int, duration C.i
 			}
 
 			if pipeline.codecName == "h264" {
-
 				go func(conn *net.UDPConn, buffer unsafe.Pointer, bufferLen C.int) {
 					/*defer func(){
 					if err := recover(); err!=nil{

@@ -69,7 +69,7 @@ func main() {
 
 	rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("h264-x264enc", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
+	gst.CreatePipeline("h264_x264", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
 	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc, rtmpudp.GetConn()).Start()
 
 	connector := sdk.NewConnector(addr)

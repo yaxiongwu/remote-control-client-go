@@ -70,7 +70,7 @@ func main() {
 
 	rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("h264-omxh264enc", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
+	gst.CreatePipeline("h264_omx", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
 	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc, rtmpudp.GetConn()).Start()
 
 	//在树莓派上控制时开启
