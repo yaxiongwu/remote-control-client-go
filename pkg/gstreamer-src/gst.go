@@ -10,13 +10,13 @@ package gst
 import "C"
 import (
 	"fmt"
-	"net"
 	"sync"
 	"time"
 	"unsafe"
 
 	"github.com/pion/webrtc/v3"
 	"github.com/pion/webrtc/v3/pkg/media"
+	"github.com/yaxiongwu/remote-control-client-go/pkg/rtmpudp"
 )
 
 func init() {
@@ -30,7 +30,8 @@ type Pipeline struct {
 	id        int
 	codecName string
 	clockRate float32
-	conn      *net.UDPConn
+	//conn      *net.UDPConn
+	rtmpudp *rtmpudp.RtmpUdp
 }
 
 var pipelines = make(map[int]*Pipeline)
@@ -44,7 +45,7 @@ const (
 
 // CreatePipeline creates a GStreamer Pipeline
 //pipelineSink videoSrc := " autovideosrc ! video/x-raw, width=640, height=480 ! videoconvert ! queue"
-func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, pipelineSrc string, conn *net.UDPConn) *Pipeline {
+func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, pipelineSrc string, rtmpudp *rtmpudp.RtmpUdp) *Pipeline {
 	//pipelineStr := "tee name=t ! appsink name=appsink t. ! queue ! flvmux ! rtmpsink location='rtmp://live-push.bilivideo.com/live-bvc/?streamname=live_443203481_72219565&key=0c399147659bfa24be5454360c227c21&schedule=rtmp&pflag=1'"
 	//pipelineStr := "tee name=t ! appsink name=appsink t. ! queue ! videoconvert ! flvmux ! filesink location=test.flv"
 	pipelineStr := "appsink name=appsink"
@@ -117,7 +118,8 @@ func CreatePipeline(codecName string, tracks []*webrtc.TrackLocalStaticSample, p
 		id:        len(pipelines),
 		codecName: codecName,
 		clockRate: clockRate,
-		conn:      conn,
+		//conn:      conn,
+		rtmpudp: rtmpudp,
 	}
 
 	pipelines[pipeline.id] = pipeline
@@ -149,18 +151,27 @@ func goHandlePipelineBuffer(buffer unsafe.Pointer, bufferLen C.int, duration C.i
 			}
 
 			if pipeline.codecName == "h264" {
-				go func(conn *net.UDPConn, buffer unsafe.Pointer, bufferLen C.int) {
-					/*defer func(){
-					if err := recover(); err!=nil{
-						fmt.Println("conn recover err:",err)
-						}
-					}()
-					* */
-					_, err1 := conn.Write(C.GoBytes(buffer, bufferLen)[0:bufferLen])
-					if err1 != nil {
-						panic(err1)
-					}
-				}(pipeline.conn, buffer, bufferLen)
+				// go func(conn *net.UDPConn, buffer unsafe.Pointer, bufferLen C.int) {
+				// 	/*defer func(){
+				// 	if err := recover(); err!=nil{
+				// 		fmt.Println("conn recover err:",err)
+				// 		}
+				// 	}()
+				// 	* */
+				// 	_, err1 := conn.Write(C.GoBytes(buffer, bufferLen)[0:bufferLen])
+				// 	if err1 != nil {
+				// 		panic(err1)
+				// 	}
+				// }(pipeline.conn, buffer, bufferLen)
+				len := int(bufferLen)
+				//pipeline.rtmpudp.CopyUdpData(buffer, bufferLen)
+				copy(pipeline.rtmpudp.Buffer[0:len], C.GoBytes(buffer, bufferLen)[0:bufferLen])
+				pipeline.rtmpudp.BufferLength = len
+				pipeline.rtmpudp.CopyUdpData()
+				// data := make([]byte, bufferLen)
+				// copy(data, C.GoBytes(buffer, bufferLen)[0:bufferLen])
+				// pipeline.rtmpudp.CopyUdpData(data)
+				//fmt.Printf("gst.go pipeline.rtmpudp.CopyUdpData len:%d\n\n\n", len)
 			} //if pipeline.codecName == "h264" {
 		} //for
 	} else {

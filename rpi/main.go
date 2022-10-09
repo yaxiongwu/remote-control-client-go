@@ -70,8 +70,8 @@ func main() {
 
 	rtmpudp := rtmpudp.Init("5000")
 	//gst.CreatePipeline("vp8", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc).Start()
-	gst.CreatePipeline("h264_omx", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp.GetConn()).Start()
-	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc, rtmpudp.GetConn()).Start()
+	gst.CreatePipeline("h264_omx", []*webrtc.TrackLocalStaticSample{videoTrack}, videoSrc, rtmpudp).Start()
+	gst.CreatePipeline("opus", []*webrtc.TrackLocalStaticSample{audioTrack}, audioSrc, rtmpudp).Start()
 
 	//在树莓派上控制时开启
 
@@ -133,11 +133,11 @@ func main() {
 		codec := track.Codec()
 		log.Infof("track.Codec():%v", codec)
 		if codec.MimeType == "audio/opus" {
-			samplingRate := 48000
+			samplingRate := int(codec.ClockRate)
 
 			// Number of channels (aka locations) to play sounds from. Either 1 or 2.
 			// 1 is mono sound, and 2 is stereo (most speakers are stereo).
-			numOfChannels := 1
+			numOfChannels := 1 ///int(codec.Channels)
 
 			// Bytes used by a channel to represent one sample. Either 1 or 2 (usually 2).
 			audioBitDepth := 2
@@ -158,12 +158,14 @@ func main() {
 			//player.Play()
 			//pipeReader, pipeWriter := io.Pipe()
 
-			b := make([]byte, 1500)
+			buffer1 := make([]byte, 3200)
+			buffer2 := make([]byte, 3200)
 			rtpPacket := &rtp.Packet{}
+			var packageLen int
 			for {
 
 				// Read
-				n, _, readErr := track.Read(b)
+				n, _, readErr := track.Read(buffer1)
 				if readErr != nil {
 					log.Errorf("OnTrack read error: %v", readErr)
 					return
@@ -171,17 +173,18 @@ func main() {
 				}
 
 				// Unmarshal the packet and update the PayloadType
-				if err = rtpPacket.Unmarshal(b[:n]); err != nil {
+				if err = rtpPacket.Unmarshal(buffer1[:n]); err != nil {
 					log.Errorf("OnTrack UnMarshal error: %v", err)
 					return
 					//panic(err)
 				}
 
 				//复制一份，以防覆盖
-				temp := make([]byte, len(rtpPacket.Payload))
-				copy(temp, rtpPacket.Payload)
+				//temp := make([]byte, len(rtpPacket.Payload))
+				packageLen = len(rtpPacket.Payload)
+				copy(buffer2[0:packageLen], rtpPacket.Payload)
 				//decoder.SetOpusData(rtpPacket.Payload)
-				decoder.Write(temp)
+				decoder.Write(buffer2[0:packageLen])
 
 				player.Play()
 
